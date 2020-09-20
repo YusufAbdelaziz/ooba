@@ -1,4 +1,31 @@
 {
+  "SignIn" : {
+    "signIn" : "Log In",
+    "userNameOrEmail" : "Username or Email",
+    "password" : "Password",
+    "letsSignYouIn": "Let's sign you in",
+    "welcomeBack" : "Welcome back, you've been missed.",
+    "rememberMe" : "Remember me",
+    "forgetPassword" : "Forget password ?",
+    "signInWithGoogle" : "Sign in with Google",
+    "signInWithFacebook" : "Sign in with Facebook",
+    "dontHaveAccount" : "Don't have an account ?",
+    "signUpNewAccount" : "Sign Up"
+  },
+  "SignUp" : {
+    "alreadyHaveAccount" : "Already have an account?",
+    "signUp" : "Sign Up",
+    "signIn" : "Sign in",
+    "continueWithGoogle" : "Continue with Google",
+    "continueWithFacebook" : "Continue with Facebook",
+    "createYouAccount" : "Create your account",
+    "joinCommunity" : "Join a community of over 200k people !",
+    "username" : "Username",
+    "email" : "Email",
+    "phone" : "Phone",
+    "password" : "Password",
+    "confirmPassword" : "Confirm Password"
+  },
   "english" : "English",
   "arabic" : "arabic"
 

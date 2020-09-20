@@ -6,6 +6,7 @@ abstract class LanguageEvent extends Equatable {
   @override
   List<Object> get props => [];
 }
+
 /// Used to load the stored language.
 class LanguageLoadStarted extends LanguageEvent {}
 
@@ -17,4 +18,9 @@ class LanguageSelected extends LanguageEvent {
 
   @override
   List<Object> get props => [languageCode];
+
+  @override
+  String toString() {
+    return 'LanguageSelected : languageCode : $languageCode';
+  }
 }

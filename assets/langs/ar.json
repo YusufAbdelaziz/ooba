@@ -1,4 +1,31 @@
 {
+  "SignIn" : {
+    "signIn" : "تسجيل الدخول",
+    "userNameOrEmail" : "إسم المستخدم أو الإيميل",
+    "password" : "كلمة المرور",
+    "letsSignYouIn" : "سجل دخولك",
+    "welcomeBack" : "مرحباً بك مرةً أخرى، إشتقنا لك",
+    "rememberMe" : "تذكرني",
+    "forgetPassword" : "هل نسيت كلمة المرور ؟",
+    "signInWithGoogle" : "تسجيل الدخول بجوجل",
+    "signInWithFacebook" : "تسجيل الدخول بفيسبوك",
+    "dontHaveAccount" : "ليس لديك حساب؟",
+    "signUpNewAccount" : "سجل حساب جديد"
+  },
+  "SignUp" : {
+    "alreadyHaveAccount" : "لديك حساب بالفعل؟",
+    "signIn" : "سجل الدخول",
+    "signUp" : "تسجيل حساب جديد",
+    "continueWithGoogle" : "تسجيل الدخول بجوجل",
+    "continueWithFacebook" : "تسجيل الدخول بفيسبوك",
+    "createYouAccount" : "انشئ حسابك الخاص",
+    "joinCommunity" : "إنضم لمجتمع به 200 الف شخص !",
+    "username" : "إسم المستخدم",
+    "email" : "الإيميل",
+    "phone" : "رقم الهاتف",
+    "password" : "كلمة المرور",
+    "confirmPassword" : "تأكيد كلمة المرور"
+  },
   "english" : "الإنجليزية",
   "arabic" : "العربية"
 }

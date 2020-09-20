@@ -17,21 +17,31 @@ class AppLocalizations {
   /// Static member to have a simple access to the delegate from the MaterialApp
   static const LocalizationsDelegate<AppLocalizations> delegate = _AppLocalizationsDelegate();
 
-  Map<String, String> _localizedStrings;
+  Map<String, dynamic> _localizedValues;
 
   Future<bool> load() async {
     String jsonString = await rootBundle.loadString('assets/langs/${locale.languageCode}.json');
     Map<String, dynamic> jsonMap = json.decode(jsonString);
-
-    _localizedStrings = jsonMap.map((key, value) {
-      return MapEntry(key, value.toString());
-    });
-
+    _localizedValues = flattenTranslations(jsonMap);
     return true;
   }
 
+  /// Used to flatten the maps in json file and turns it to key/value pairs.
+  Map flattenTranslations(Map<String, dynamic> json, [String prefix = '']) {
+    final Map<String, String> translations = {};
+    json.forEach((String key, dynamic value) {
+      if (value is Map) {
+        translations.addAll(flattenTranslations(value, '$prefix$key.'));
+      } else {
+        translations['$prefix$key'] = value.toString();
+      }
+    });
+    return translations;
+  }
+
   String translate(String key) {
-    return _localizedStrings[key];
+    // Returns a localized text or KEY if there's no localization
+    return _localizedValues[key] ?? key;
   }
 }
 
