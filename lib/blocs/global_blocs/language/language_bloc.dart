@@ -1,9 +1,9 @@
 import 'dart:async';
 
+import 'package:Ooba/common/translation_configuration/shared_preferences_service.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
-import 'package:oppa_app/common/translation_configuration/shared_preferences_service.dart';
 
 part 'language_event.dart';
 part 'language_state.dart';

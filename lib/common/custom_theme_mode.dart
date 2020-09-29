@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:oppa_app/common/translation_configuration/app_localizations.dart';
+
+import 'translation_configuration/app_localizations.dart';
 
 /// Responsible of handling themes.
 class CustomThemeMode {

@@ -1,16 +1,19 @@
+import 'package:Ooba/blocs/global_blocs/auth/auth_cubit.dart';
+import 'package:Ooba/blocs/global_blocs/email_username_validation/email_username_validation_bloc.dart';
+import 'package:Ooba/blocs/global_blocs/language/language_bloc.dart';
+import 'package:Ooba/blocs/global_blocs/password_validation/password_validation_bloc.dart';
+import 'package:Ooba/blocs/global_blocs/password_visibility/password_visibility_cubit.dart';
+import 'package:Ooba/blocs/global_blocs/state_handler_cubit/state_handler_cubit.dart';
+import 'package:Ooba/common/translation_configuration/app_localizations.dart';
+import 'package:Ooba/common/translation_configuration/shared_preferences_service.dart';
+import 'package:Ooba/utilities/space.dart';
+import 'package:Ooba/widgets/auth_pages/custom_auth_footer.dart';
+import 'package:Ooba/widgets/auth_pages/custom_auth_header.dart';
+import 'package:Ooba/widgets/auth_pages/custom_button.dart';
+import 'package:Ooba/widgets/common/custom_appbar.dart';
+import 'package:Ooba/widgets/common/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:oppa_app/blocs/global_blocs/auth_bloc/auth_cubit.dart';
-import 'package:oppa_app/blocs/global_blocs/language_bloc/language_bloc.dart';
-import 'package:oppa_app/blocs/global_blocs/password_visibility/password_visibility_cubit.dart';
-import 'package:oppa_app/blocs/global_blocs/state_handler_cubit/state_handler_cubit.dart';
-import 'package:oppa_app/common/translation_configuration/app_localizations.dart';
-import 'package:oppa_app/common/translation_configuration/shared_preferences_service.dart';
-import 'package:oppa_app/widgets/auth_pages/custom_auth_appbar.dart';
-import 'package:oppa_app/widgets/auth_pages/custom_auth_button.dart';
-import 'package:oppa_app/widgets/auth_pages/custom_auth_footer.dart';
-import 'package:oppa_app/widgets/auth_pages/custom_auth_header.dart';
-import 'package:oppa_app/widgets/auth_pages/custom_text_field.dart';
 
 class SignInPage extends StatefulWidget {
   @override
@@ -37,15 +40,21 @@ class _SignInPageState extends State<SignInPage> {
     return MultiBlocProvider(
       providers: [
         BlocProvider<StateHandlerCubit>(
-          create: (context) => StateHandlerCubit(),
+          create: (_) => StateHandlerCubit(),
         ),
         BlocProvider<PasswordVisibilityCubit>(
-          create: (context) => PasswordVisibilityCubit()..switchVisibility(isVisible: false),
+          create: (_) => PasswordVisibilityCubit(),
+        ),
+        BlocProvider<PasswordValidationBloc>(
+          create: (_) => PasswordValidationBloc(),
+        ),
+        BlocProvider<EmailUsernameValidationBloc>(
+          create: (_) => EmailUsernameValidationBloc(),
         )
       ],
       child: Builder(
         builder: (context) => Scaffold(
-          appBar: CustomAuthAppBar(
+          appBar: CustomAppBar(
             title: AppLocalizations.of(context).translate('SignIn.signIn'),
           ),
           body: Padding(
@@ -67,40 +76,68 @@ class _SignInPageState extends State<SignInPage> {
                                   AppLocalizations.of(context).translate('SignIn.welcomeBack'),
                             ),
                             space(height: 20),
-                            CustomTextField(
-                              controller: _usernameEmailController,
-                              focusNode: _usernameEmailFocusNode,
-                              onSubmitted: (_) =>
-                                  FocusScope.of(context).autofocus(_passwordFocusNode),
-                              labelText:
-                                  AppLocalizations.of(context).translate('SignIn.userNameOrEmail'),
-                            ),
-                            space(height: 10),
-                            BlocBuilder<PasswordVisibilityCubit, PasswordVisibilityState>(
+                            BlocBuilder<EmailUsernameValidationBloc, EmailUsernameValidationState>(
                                 builder: (context, state) {
-                              bool isVisible;
-                              if (state is SwitchPasswordVisibility) {
-                                isVisible = state.isVisible;
+                              String usernameEmailErrorTxt;
+                              if (state is UsernameEmailInvalid) {
+                                usernameEmailErrorTxt = AppLocalizations.of(context)
+                                    .translate('SignUp.usernameEmailInvalid');
                               }
                               return CustomTextField(
-                                controller: _passwordController,
-                                focusNode: _passwordFocusNode,
-                                onSubmitted: (_) => FocusScope.of(context).unfocus(),
-                                labelText:
-                                    AppLocalizations.of(context).translate('SignIn.password'),
-                                inputType: TextInputType.visiblePassword,
-                                obscureText: isVisible ? false : true,
-                                suffixIcon: InkWell(
-                                    hoverColor: Colors.transparent,
-                                    splashColor: Colors.transparent,
-                                    highlightColor: Colors.transparent,
-                                    onTap: () => BlocProvider.of<PasswordVisibilityCubit>(context)
-                                        .switchVisibility(isVisible: !isVisible),
-                                    child:
-                                        Icon(isVisible ? Icons.visibility : Icons.visibility_off)),
+                                controller: _usernameEmailController,
+                                errorText: usernameEmailErrorTxt,
+                                focusNode: _usernameEmailFocusNode,
+                                onSubmitted: (_) =>
+                                    FocusScope.of(context).autofocus(_passwordFocusNode),
+                                labelText: AppLocalizations.of(context)
+                                    .translate('SignIn.userNameOrEmail'),
+                                onChanged: (usernameEmail) =>
+                                    BlocProvider.of<EmailUsernameValidationBloc>(context)
+                                        .add(UsernameEmailChecked(usernameEmail: usernameEmail)),
                               );
                             }),
                             space(height: 10),
+                            BlocBuilder<PasswordValidationBloc, PasswordValidationState>(
+                              builder: (context, state) {
+                                String passwordErrorTxt;
+                                if (state is SignUpPasswordsInvalid) {
+                                  passwordErrorTxt = AppLocalizations.of(context)
+                                      .translate('SignIn.passwordInvalid');
+                                } else if (state is SignUpPasswordsValid) {
+                                  passwordErrorTxt = null;
+                                }
+                                return BlocBuilder<PasswordVisibilityCubit,
+                                    PasswordVisibilityState>(builder: (context, state) {
+                                  bool isVisible = false;
+                                  if (state is SwitchPasswordVisibility) {
+                                    isVisible = state.isVisible;
+                                  }
+                                  return CustomTextField(
+                                    controller: _passwordController,
+                                    focusNode: _passwordFocusNode,
+                                    errorText: passwordErrorTxt,
+                                    onSubmitted: (_) => FocusScope.of(context).unfocus(),
+                                    labelText:
+                                        AppLocalizations.of(context).translate('SignIn.password'),
+                                    inputType: TextInputType.visiblePassword,
+                                    obscureText: isVisible ? false : true,
+                                    onChanged: (pass) =>
+                                        BlocProvider.of<PasswordValidationBloc>(context)
+                                            .add(SignInPasswordChecked(password: pass)),
+                                    suffixIcon: InkWell(
+                                        hoverColor: Colors.transparent,
+                                        splashColor: Colors.transparent,
+                                        highlightColor: Colors.transparent,
+                                        onTap: () =>
+                                            BlocProvider.of<PasswordVisibilityCubit>(context)
+                                                .switchPasswordVisibility(isVisible: !isVisible),
+                                        child: Icon(
+                                            isVisible ? Icons.visibility : Icons.visibility_off)),
+                                  );
+                                });
+                              },
+                            ),
+                            space(height: 20),
                             Row(
                               children: [
                                 SizedBox(
@@ -130,6 +167,8 @@ class _SignInPageState extends State<SignInPage> {
                                         .copyWith(fontSize: 15)),
                                 Spacer(),
                                 GestureDetector(
+                                  onTap: () =>
+                                      BlocProvider.of<AuthCubit>(context).forgetPasswordSwitched(),
                                   child: Text(
                                       AppLocalizations.of(context)
                                           .translate('SignIn.forgetPassword'),
@@ -140,22 +179,22 @@ class _SignInPageState extends State<SignInPage> {
                                 ),
                               ],
                             ),
-                            space(height: 35),
+                            space(height: 20),
                             Padding(
                               padding: const EdgeInsets.symmetric(horizontal: 15),
                               child: Column(
                                 children: [
-                                  CustomAuthButton(
+                                  CustomButton(
                                       color: Theme.of(context).primaryColor,
                                       label:
                                           AppLocalizations.of(context).translate('SignIn.signIn')),
-                                  CustomAuthButton(
+                                  CustomButton(
                                     color: Theme.of(context).buttonColor,
                                     label: AppLocalizations.of(context)
                                         .translate('SignIn.signInWithGoogle'),
                                     logoAsset: 'assets/images/google.png',
                                   ),
-                                  CustomAuthButton(
+                                  CustomButton(
                                     color: Theme.of(context).buttonColor,
                                     label: AppLocalizations.of(context)
                                         .translate('SignIn.signInWithFacebook'),
@@ -196,13 +235,6 @@ class _SignInPageState extends State<SignInPage> {
           ),
         ),
       ),
-    );
-  }
-
-  SizedBox space({double height, double width}) {
-    return SizedBox(
-      height: height,
-      width: width,
     );
   }
 }

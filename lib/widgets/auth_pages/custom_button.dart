@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class CustomAuthButton extends StatelessWidget {
+class CustomButton extends StatelessWidget {
   final String logoAsset;
   final String label;
   final Color color;
   final void Function() onTap;
-  const CustomAuthButton({this.logoAsset, @required this.label, @required this.color, this.onTap});
+  const CustomButton({this.logoAsset, @required this.label, @required this.color, this.onTap});
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
