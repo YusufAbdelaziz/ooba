@@ -2,14 +2,17 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:oppa_app/blocs/global_blocs/auth_bloc/auth_cubit.dart';
-import 'package:oppa_app/common/custom_theme_mode.dart';
-import 'package:oppa_app/pages/auth_pages/sign_in/sign_in_page.dart';
-import 'package:oppa_app/pages/auth_pages/sign_up/sign_up_page.dart';
 
-import 'blocs/global_blocs/language_bloc/language_bloc.dart';
+import 'blocs/global_blocs/auth/auth_cubit.dart';
+import 'blocs/global_blocs/language/language_bloc.dart';
 import 'common/bloc_observer.dart';
+import 'common/custom_theme_mode.dart';
 import 'common/translation_configuration/app_localizations.dart';
+import 'pages/auth_pages/email_check/email_check_page.dart';
+import 'pages/auth_pages/forget_password/forget_password_page.dart';
+import 'pages/auth_pages/phone_verification/phone_verification_page.dart';
+import 'pages/auth_pages/sign_in/sign_in_page.dart';
+import 'pages/auth_pages/sign_up/sign_up_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -30,7 +33,7 @@ class MyApp extends StatelessWidget {
     return BlocBuilder<LanguageBloc, LanguageState>(
       builder: (context, langState) => MaterialApp(
         locale: langState.locale,
-        title: 'Flutter Demo',
+        title: 'Ooba',
         localizationsDelegates: [
           GlobalMaterialLocalizations.delegate,
           GlobalWidgetsLocalizations.delegate,
@@ -57,20 +60,15 @@ class MainApp extends StatelessWidget {
       builder: (context, state) {
         Widget widget;
         if (state is AuthSignIn) {
-          // ignore: missing_return
           widget = SignInPage();
         } else if (state is AuthSignUp) {
-          // ignore: missing_return
           widget = SignUpPage();
         } else if (state is AuthForgetPassword) {
-          // ignore: missing_return
-          /// TODO : Add Forget password page.
+          widget = ForgetPasswordPage();
         } else if (state is AuthEmailCheck) {
-          // ignore: missing_return
-          /// TODO : Add Email check page.
+          widget = EmailCheckPage();
         } else if (state is AuthPhoneVerification) {
-          // ignore: missing_return
-          /// TODO : Add phone verification page.
+          widget = PhoneVerificationPage();
         }
         return widget;
       },

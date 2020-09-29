@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-class CustomAuthAppBar extends StatelessWidget with PreferredSizeWidget {
+class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
   final String title;
   final void Function() backAction;
 
-  const CustomAuthAppBar({@required this.title, this.backAction});
+  const CustomAppBar({@required this.title, this.backAction});
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -14,7 +14,10 @@ class CustomAuthAppBar extends StatelessWidget with PreferredSizeWidget {
         children: [
           if (backAction != null)
             Expanded(
-              child: GestureDetector(
+              child: InkWell(
+                splashColor: Colors.transparent,
+                hoverColor: Colors.transparent,
+                highlightColor: Colors.transparent,
                 onTap: backAction,
                 child: Icon(
                   Icons.keyboard_backspace,
@@ -26,7 +29,7 @@ class CustomAuthAppBar extends StatelessWidget with PreferredSizeWidget {
             flex: 1,
           ),
           Text(
-            title,
+            title.toUpperCase(),
             style: Theme.of(context).textTheme.headline5,
             textAlign: TextAlign.center,
           ),

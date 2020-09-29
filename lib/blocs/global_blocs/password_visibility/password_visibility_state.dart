@@ -16,3 +16,11 @@ class SwitchPasswordVisibility extends PasswordVisibilityState {
   @override
   List<Object> get props => [];
 }
+
+class SwitchConfirmPasswordVisibility extends PasswordVisibilityState {
+  final bool isVisible;
+
+  SwitchConfirmPasswordVisibility({@required this.isVisible});
+  @override
+  List<Object> get props => [];
+}

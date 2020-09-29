@@ -1,22 +1,29 @@
+import 'package:Ooba/utilities/timer/timer_bloc.dart';
 import 'package:bloc/bloc.dart';
 
 /// Used to observe state transition and fired events.
 class MyBlocObserver extends BlocObserver {
   @override
   void onEvent(Bloc bloc, Object event) {
-    print(event);
+    if (bloc is! TimerBloc) {
+      print(event);
+    }
     super.onEvent(bloc, event);
   }
 
   @override
   void onChange(Cubit cubit, Change change) {
-    print(change);
+    if (cubit is! TimerBloc) {
+      print(change);
+    }
     super.onChange(cubit, change);
   }
 
   @override
   void onTransition(Bloc bloc, Transition transition) {
-    print(transition);
+    if (bloc is! TimerBloc) {
+      print(transition);
+    }
     super.onTransition(bloc, transition);
   }
 
