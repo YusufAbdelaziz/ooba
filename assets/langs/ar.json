@@ -67,6 +67,10 @@
   "ProductDetails" : {
     "productDetails" : "تفاصيل المنتج"
   },
+  "Address": {
+    "myAddresses": "عناويني",
+    "change": "تعديل"
+  },
   "english" : "الإنجليزية",
   "arabic" : "العربية"
 }
