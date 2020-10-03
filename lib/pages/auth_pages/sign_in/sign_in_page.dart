@@ -1,11 +1,13 @@
-import 'package:Ooba/blocs/global_blocs/auth/auth_cubit.dart';
 import 'package:Ooba/blocs/global_blocs/email_username_validation/email_username_validation_bloc.dart';
 import 'package:Ooba/blocs/global_blocs/language/language_bloc.dart';
+import 'package:Ooba/blocs/global_blocs/main_cubit/main_cubit.dart';
 import 'package:Ooba/blocs/global_blocs/password_validation/password_validation_bloc.dart';
 import 'package:Ooba/blocs/global_blocs/password_visibility/password_visibility_cubit.dart';
 import 'package:Ooba/blocs/global_blocs/state_handler_cubit/state_handler_cubit.dart';
 import 'package:Ooba/common/translation_configuration/app_localizations.dart';
 import 'package:Ooba/common/translation_configuration/shared_preferences_service.dart';
+import 'package:Ooba/pages/auth_pages/forget_password/forget_password_page.dart';
+import 'package:Ooba/pages/auth_pages/sign_up/sign_up_page.dart';
 import 'package:Ooba/utilities/space.dart';
 import 'package:Ooba/widgets/auth_pages/custom_auth_footer.dart';
 import 'package:Ooba/widgets/auth_pages/custom_auth_header.dart';
@@ -14,6 +16,7 @@ import 'package:Ooba/widgets/common/custom_appbar.dart';
 import 'package:Ooba/widgets/common/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:page_transition/page_transition.dart';
 
 class SignInPage extends StatefulWidget {
   @override
@@ -167,8 +170,8 @@ class _SignInPageState extends State<SignInPage> {
                                         .copyWith(fontSize: 15)),
                                 Spacer(),
                                 GestureDetector(
-                                  onTap: () =>
-                                      BlocProvider.of<AuthCubit>(context).forgetPasswordSwitched(),
+                                  onTap: () => Navigator.of(context).push(PageTransition(
+                                      type: PageTransitionType.fade, child: ForgetPasswordPage())),
                                   child: Text(
                                       AppLocalizations.of(context)
                                           .translate('SignIn.forgetPassword'),
@@ -186,6 +189,8 @@ class _SignInPageState extends State<SignInPage> {
                                 children: [
                                   CustomButton(
                                       color: Theme.of(context).primaryColor,
+                                      onTap: () =>
+                                          BlocProvider.of<MainCubit>(context).mainPagesSwitched(),
                                       label:
                                           AppLocalizations.of(context).translate('SignIn.signIn')),
                                   CustomButton(
@@ -202,8 +207,8 @@ class _SignInPageState extends State<SignInPage> {
                                   ),
                                   space(height: 10),
                                   CustomAuthFooter(
-                                    onTap: () =>
-                                        BlocProvider.of<AuthCubit>(context).signUpSwitched(),
+                                    onTap: () => Navigator.of(context).push(PageTransition(
+                                        type: PageTransitionType.fade, child: SignUpPage())),
                                     normalText: AppLocalizations.of(context)
                                         .translate('SignIn.dontHaveAccount'),
                                     boldText: AppLocalizations.of(context)

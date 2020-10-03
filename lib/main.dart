@@ -1,3 +1,4 @@
+import 'package:Ooba/blocs/global_blocs/main_cubit/main_cubit.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,11 +9,8 @@ import 'blocs/global_blocs/language/language_bloc.dart';
 import 'common/bloc_observer.dart';
 import 'common/custom_theme_mode.dart';
 import 'common/translation_configuration/app_localizations.dart';
-import 'pages/auth_pages/email_check/email_check_page.dart';
-import 'pages/auth_pages/forget_password/forget_password_page.dart';
-import 'pages/auth_pages/phone_verification/phone_verification_page.dart';
 import 'pages/auth_pages/sign_in/sign_in_page.dart';
-import 'pages/auth_pages/sign_up/sign_up_page.dart';
+import 'pages/main_pages/main_products_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,7 +20,10 @@ void main() async {
       create: (context) => LanguageBloc()..add(LanguageLoadStarted()),
     ),
     BlocProvider<AuthCubit>(
-      create: (context) => AuthCubit()..signInSwitched(),
+      create: (context) => AuthCubit(),
+    ),
+    BlocProvider<MainCubit>(
+      create: (_) => MainCubit()..authPagesSwitched(),
     )
   ], child: MyApp()));
 }
@@ -34,6 +35,7 @@ class MyApp extends StatelessWidget {
       builder: (context, langState) => MaterialApp(
         locale: langState.locale,
         title: 'Ooba',
+        color: Theme.of(context).primaryColor,
         localizationsDelegates: [
           GlobalMaterialLocalizations.delegate,
           GlobalWidgetsLocalizations.delegate,
@@ -56,19 +58,13 @@ class MyApp extends StatelessWidget {
 class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AuthCubit, AuthState>(
+    return BlocBuilder<MainCubit, MainState>(
       builder: (context, state) {
         Widget widget;
-        if (state is AuthSignIn) {
+        if (state is AuthPages) {
           widget = SignInPage();
-        } else if (state is AuthSignUp) {
-          widget = SignUpPage();
-        } else if (state is AuthForgetPassword) {
-          widget = ForgetPasswordPage();
-        } else if (state is AuthEmailCheck) {
-          widget = EmailCheckPage();
-        } else if (state is AuthPhoneVerification) {
-          widget = PhoneVerificationPage();
+        } else if (state is MainPages) {
+          widget = MainProductsPage();
         }
         return widget;
       },
