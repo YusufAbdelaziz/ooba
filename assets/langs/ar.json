@@ -53,6 +53,20 @@
     "requestNewCode" : "أطلب كود جديد خلال",
     "requestCode" : "أطلب كود جديد"
   },
+  "Drawer" : {
+    "men" : "للرجال",
+    "women" : "للنساء",
+    "youth" : "للشباب",
+    "kids" : "للأطفال",
+    "orderHistory" : "الطلبات السابقة",
+    "notification" : "إشعارات",
+    "settings" : "إعدادات",
+    "logout" : "تسجيل الخروج",
+    "favoriteProducts" : "المنتجات المفضلة"
+  },
+  "ProductDetails" : {
+    "productDetails" : "تفاصيل المنتج"
+  },
   "english" : "الإنجليزية",
   "arabic" : "العربية"
 }

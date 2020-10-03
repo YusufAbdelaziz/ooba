@@ -34,10 +34,12 @@ dependencies:
   shared_preferences: ^0.5.12
   equatable: ^1.2.5
   rxdart: ^0.24.1
-  pin_code_fields: ^5.1.0
+  pin_code_fields: ^5.2.0
   hydrated_bloc: ^6.0.1
+  page_transition: ^1.1.7+2
+  photo_view: ^0.10.2
 dev_dependencies:
-  flutter_launcher_icons: ^0.8.0
+  flutter_launcher_icons: ^0.8.1
   flutter_test:
     sdk: flutter
 
@@ -64,6 +66,13 @@ flutter:
      - assets/images/google.png
      - assets/images/send_group.png
      - assets/images/app_icon.png
+     - assets/images/ooba_icon.png
+     - assets/images/product.png
+     - assets/images/cart.png
+     - assets/images/logout.png
+     - assets/images/camera.png
+     - assets/images/search_icon.png
+     - assets/images/model.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 

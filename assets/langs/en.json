@@ -53,6 +53,20 @@
     "requestNewCode" : "Request new code in",
     "requestCode" : "Request new code"
   },
+  "Drawer" : {
+    "men" : "Men",
+    "women" : "Women",
+    "youth" : "Youth",
+    "kids" : "Kids",
+    "orderHistory" : "Order History",
+    "notification" : "Notifications",
+    "settings" : "Settings",
+    "logout" : "Logout",
+    "favoriteProducts" : "Favorite Products"
+  },
+  "ProductDetails" : {
+    "productDetails" : "تفاصيل المنتج"
+  },
   "english" : "English",
   "arabic" : "arabic"
 
