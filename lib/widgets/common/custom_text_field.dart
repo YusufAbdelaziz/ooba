@@ -7,9 +7,11 @@ class CustomTextField extends StatelessWidget {
   final String labelText;
   final TextInputType inputType;
   final bool obscureText;
+  final bool isEnabled;
   final void Function(String val) onSubmitted;
   final void Function(String val) onChanged;
   final Widget suffixIcon;
+
   const CustomTextField(
       {Key key,
       this.controller,
@@ -19,9 +21,11 @@ class CustomTextField extends StatelessWidget {
       this.focusNode,
       this.errorText,
       this.obscureText,
+      this.isEnabled = true,
       this.labelText,
       this.inputType})
       : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return TextField(
@@ -30,6 +34,7 @@ class CustomTextField extends StatelessWidget {
       onSubmitted: onSubmitted,
       keyboardType: inputType,
       onChanged: onChanged,
+      enabled: isEnabled,
       obscureText: obscureText ?? false,
       style: Theme.of(context).textTheme.headline3.copyWith(fontSize: 16),
       decoration: InputDecoration(
