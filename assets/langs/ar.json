@@ -54,10 +54,10 @@
     "requestCode" : "أطلب كود جديد"
   },
   "Drawer" : {
-    "men" : "للرجال",
-    "women" : "للنساء",
-    "youth" : "للشباب",
-    "kids" : "للأطفال",
+    "men" : "الرجال",
+    "women" : "النساء",
+    "youth" : "الشباب",
+    "kids" : "الأطفال",
     "orderHistory" : "الطلبات السابقة",
     "notification" : "إشعارات",
     "settings" : "إعدادات",
@@ -65,7 +65,41 @@
     "favoriteProducts" : "المنتجات المفضلة"
   },
   "ProductDetails" : {
-    "productDetails" : "تفاصيل المنتج"
+    "productDetails" : "تفاصيل المنتج",
+    "addToCart" : "أضف المنتج للعربة",
+    "description" : "وصف المنتج"
+  }, "VendorProducts" : {
+  "follow" : "متابعة",
+  "unFollow" : "إلغاء المتابعة"
+  },
+  "OrderDetails" : {
+    "orderDetails" : "تفاصيل الطلب",
+    "deliverTo" : "التوصيل إلى",
+    "shippingMethod" : "طريقة الشحن" ,
+    "subtotal" : "إجمالي المنتجات",
+    "shipping" : "الشحن",
+    "total" : "إجمالي الطلب",
+    "placeTheOrder" : "طلب المنتجات",
+    "free" : "مجاني",
+    "change" : "تغيير"
+  },
+  "OrderPlaced" : {
+    "congrats" : "تهانينا",
+    "orderPlacedSuccess" : "لقد تم حجز طلبك بنجاح",
+    "returnToMainPage" : "العودة للصفحة الرئيسية"
+  },
+  "OrderHistory" : {
+    "viewDetails" : "التفاصيل",
+    "placedOn" : "تاريخ الطلب",
+    "amount" : "المبلغ",
+    "status" : "الحالة"
+  },
+  "Settings" : {
+    "myProfile" : "حسابي",
+    "currency" : "العملة",
+    "language" : "اللغة",
+    "address" : "العنوان",
+    "change" : "تغيير"
   },
   "english" : "الإنجليزية",
   "arabic" : "العربية"

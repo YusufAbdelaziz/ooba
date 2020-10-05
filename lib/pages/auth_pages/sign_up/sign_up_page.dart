@@ -8,7 +8,7 @@ import 'package:Ooba/pages/auth_pages/phone_verification/phone_verification_page
 import 'package:Ooba/utilities/space.dart';
 import 'package:Ooba/widgets/auth_pages/custom_auth_footer.dart';
 import 'package:Ooba/widgets/auth_pages/custom_auth_header.dart';
-import 'package:Ooba/widgets/auth_pages/custom_button.dart';
+import 'file:///C:/Users/yusse/Documents/Work/oppa_app/lib/widgets/common/custom_button.dart';
 import 'package:Ooba/widgets/common/custom_appbar.dart';
 import 'package:Ooba/widgets/common/custom_text_field.dart';
 import 'package:flutter/material.dart';

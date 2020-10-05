@@ -65,9 +65,43 @@
     "favoriteProducts" : "Favorite Products"
   },
   "ProductDetails" : {
-    "productDetails" : "تفاصيل المنتج"
+    "productDetails" : "Product Details",
+    "addToCart" : "Add to cart",
+    "description" : "Description"
   },
-  "english" : "English",
-  "arabic" : "arabic"
+  "VendorProducts" : {
+    "follow" : "Follow",
+    "unFollow" : "Unfollow"
+  },
+  "OrderDetails" : {
+    "orderDetails" : "Order Details",
+    "deliverTo" : "Deliver To",
+    "shippingMethod" : "Shipping Method" ,
+    "subtotal" : "Subtotal",
+    "shipping" : "Shipping",
+    "total" : "Total",
+    "placeTheOrder" : "Place the order",
+    "free" : "Free",
+    "change" : "Change"
+  },
+  "OrderPlaced" : {
+    "congrats" : "Congratulations",
+    "orderPlacedSuccess" : "Your order has been Placed successfully",
+    "returnToMainPage" : "Return to main page"
+  },
+  "OrderHistory" : {
+    "viewDetails" : "View Details",
+    "placedOn" : "Placed On",
+    "amount" : "Amount",
+    "status" : "Status"
+  },
+  "Settings" : {
+    "myProfile" : "My Profile",
+    "currency" : "Currency",
+    "language" : "Language",
+    "address" : "Address",
+    "change" : "Change"
+  }
+
 
 }

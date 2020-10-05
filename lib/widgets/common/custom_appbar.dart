@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+
 class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
   final String title;
   final void Function() backAction;
@@ -8,7 +9,7 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: kToolbarHeight - 15, bottom: 30),
+      padding: const EdgeInsets.only(top: kToolbarHeight , bottom: 20),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 
 import '../../common/translation_configuration/app_localizations.dart';
+import '../../pages/main_pages/category_page.dart';
+import '../../pages/main_pages/favorites_page.dart';
+import '../../pages/main_pages/notification_page.dart';
+import '../../pages/main_pages/order_history_page.dart';
+import '../../pages/main_pages/settings_page.dart';
 import '../../utilities/space.dart';
 import 'drawer_item.dart';
 
@@ -65,37 +71,56 @@ class CustomDrawer extends StatelessWidget {
                   space(height: 15),
                   DrawerItem(
                     name: AppLocalizations.of(context).translate('Drawer.men'),
-                    onTap: () {},
+                    onTap: () => Navigator.of(context).push(PageTransition(
+                        type: PageTransitionType.fade,
+                        child: CategoryPage(
+                          categoryName: AppLocalizations.of(context).translate('Drawer.men'),
+                        ))),
                   ),
                   DrawerItem(
                     name: AppLocalizations.of(context).translate('Drawer.women'),
-                    onTap: () {},
+                    onTap: () => Navigator.of(context).push(PageTransition(
+                        type: PageTransitionType.fade,
+                        child: CategoryPage(
+                          categoryName: AppLocalizations.of(context).translate('Drawer.women'),
+                        ))),
                   ),
                   DrawerItem(
                     name: AppLocalizations.of(context).translate('Drawer.youth'),
-                    onTap: () {},
+                    onTap: () => Navigator.of(context).push(PageTransition(
+                        type: PageTransitionType.fade,
+                        child: CategoryPage(
+                          categoryName: AppLocalizations.of(context).translate('Drawer.youth'),
+                        ))),
                   ),
                   DrawerItem(
                     name: AppLocalizations.of(context).translate('Drawer.kids'),
-                    onTap: () {},
+                    onTap: () => Navigator.of(context).push(PageTransition(
+                        type: PageTransitionType.fade,
+                        child: CategoryPage(
+                          categoryName: AppLocalizations.of(context).translate('Drawer.kids'),
+                        ))),
                   ),
                   DrawerItem(
                     name: AppLocalizations.of(context).translate('Drawer.orderHistory'),
-                    onTap: () {},
+                    onTap: () => Navigator.of(context).push(
+                        PageTransition(type: PageTransitionType.fade, child: OrderHistoryPage())),
                   ),
                   DrawerItem(
                     name: AppLocalizations.of(context).translate('Drawer.notification'),
-                    onTap: () {},
+                    onTap: () => Navigator.of(context).push(
+                        PageTransition(type: PageTransitionType.fade, child: NotificationPage())),
                   ),
                   DrawerItem(
                     name: AppLocalizations.of(context).translate('Drawer.favoriteProducts'),
-                    onTap: () {},
+                    onTap: () => Navigator.of(context).push(
+                        PageTransition(type: PageTransitionType.fade, child: FavoritesPage())),
                   ),
                   DrawerItem(
                     name: AppLocalizations.of(context).translate('Drawer.settings'),
-                    onTap: () {},
-                  ),
-                  space(height: 10),
+                    onTap: () => Navigator.of(context)
+                        .push(PageTransition(type: PageTransitionType.fade, child: SettingsPage())),
+                  )
                 ],
               ),
             ),
@@ -108,7 +133,8 @@ class CustomDrawer extends StatelessWidget {
             child: Container(
               height: 60,
               color: Theme.of(context).primaryColor,
-              child: Row(textDirection: TextDirection.ltr,
+              child: Row(
+                textDirection: TextDirection.ltr,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(AppLocalizations.of(context).translate('Drawer.logout')),

@@ -19,7 +19,13 @@ class ProductItem extends StatelessWidget {
                 fit: BoxFit.cover,
               ),
             ),
-            Positioned(top: 10, left: 10, child: FavouriteButton(size: 16,radius: 15,))
+            Positioned(
+                top: 10,
+                left: 10,
+                child: FavouriteButton(
+                  size: 16,
+                  radius: 15,
+                ))
           ],
         ),
         space(height: 10),
