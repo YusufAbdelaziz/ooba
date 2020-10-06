@@ -5,19 +5,21 @@ import 'translation_configuration/app_localizations.dart';
 /// Responsible of handling themes.
 class CustomThemeMode {
   static var _textTheme = TextTheme(
-      headline5: TextStyle(color: Colors.black87, fontSize: 15, fontWeight: FontWeight.w400),
-      headline1: TextStyle(color: Colors.black, fontSize: 24, fontWeight: FontWeight.bold),
-      headline2: TextStyle(color: Colors.black, fontSize: 15, fontWeight: FontWeight.bold),
-      headline3: TextStyle(color: Colors.black, fontSize: 16, height: 1.3),
-      bodyText1: TextStyle(color: Colors.white, fontSize: 16),
-      bodyText2: TextStyle(
-        color: Colors.black,
-        fontSize: 16,
-      ),
-      button: TextStyle(
-        color: Colors.white,
-        fontSize: 16,
-      ));
+    headline5: TextStyle(color: Colors.black87, fontSize: 15, fontWeight: FontWeight.w400),
+    headline1: TextStyle(color: Colors.black, fontSize: 24, fontWeight: FontWeight.bold),
+    headline2: TextStyle(color: Colors.black, fontSize: 15, fontWeight: FontWeight.bold),
+    headline3: TextStyle(color: Colors.black, fontSize: 16, height: 1.3),
+    bodyText1: TextStyle(color: Colors.white, fontSize: 16),
+    headline4: TextStyle(color: Colors.grey, fontSize: 16, fontWeight: FontWeight.bold),
+    bodyText2: TextStyle(
+      color: Colors.black,
+      fontSize: 16,
+    ),
+    button: TextStyle(
+      color: Colors.white,
+      fontSize: 16,
+    ),
+  );
 
   static light(BuildContext context) {
     var langCode = AppLocalizations.of(context).locale.languageCode;
@@ -28,7 +30,7 @@ class CustomThemeMode {
         buttonColor: Colors.black,
         backgroundColor: Colors.white,
         fontFamily: langCode == 'ar' ? 'Cairo' : 'Roboto',
-        textTheme: _textTheme.apply(fontSizeDelta: langCode == 'ar' ? -2 : 0));
+        textTheme: _textTheme.apply(fontSizeDelta: langCode == 'ar' ? -1 : 0));
   }
 
   static final dark = ThemeData(

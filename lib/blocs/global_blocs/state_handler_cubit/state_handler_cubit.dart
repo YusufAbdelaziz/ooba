@@ -5,10 +5,10 @@ import 'package:flutter/cupertino.dart';
 part 'state_handler_state.dart';
 
 class StateHandlerCubit extends Cubit<StateHandlerState> {
-  StateHandlerCubit() : super(StateHandlerInitial());
+  StateHandlerCubit() : super(StateHandlerInitial(false));
 
   void valueSwitched({@required bool value}) {
-    emit(StateHandlerInitial());
+    emit(StateHandlerInitial(value));
     emit(StateSwitched(value: value));
   }
 }

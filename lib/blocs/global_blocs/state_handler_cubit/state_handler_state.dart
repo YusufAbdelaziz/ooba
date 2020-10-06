@@ -1,10 +1,13 @@
 part of 'state_handler_cubit.dart';
 
 abstract class StateHandlerState extends Equatable {
-  const StateHandlerState();
+  final bool value;
+   StateHandlerState(this.value);
 }
 
 class StateHandlerInitial extends StateHandlerState {
+  StateHandlerInitial(bool value) : super(value);
+
   @override
   List<Object> get props => [];
 }
@@ -12,7 +15,7 @@ class StateHandlerInitial extends StateHandlerState {
 class StateSwitched extends StateHandlerState {
   final bool value;
 
-  StateSwitched({@required this.value});
+  StateSwitched({@required this.value}) : super(value);
   @override
   List<Object> get props => [];
 }

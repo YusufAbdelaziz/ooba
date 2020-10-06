@@ -10,7 +10,7 @@ class MainProductsAppBar extends StatelessWidget implements PreferredSizeWidget 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 10, right: 10, top: 30),
+      padding: const EdgeInsets.only(left: 10, right: 10, top: kToolbarHeight),
       child: Column(
         children: [
           Row(
@@ -37,6 +37,9 @@ class MainProductsAppBar extends StatelessWidget implements PreferredSizeWidget 
               ),
               InkWell(
                 onTap: cartAction,
+                hoverColor: Colors.transparent,
+                splashColor: Colors.transparent,
+                highlightColor: Colors.transparent,
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Image.asset(
@@ -79,5 +82,5 @@ class MainProductsAppBar extends StatelessWidget implements PreferredSizeWidget 
   }
 
   @override
-  Size get preferredSize => Size(double.infinity, 120);
+  Size get preferredSize => Size(double.infinity, 140);
 }

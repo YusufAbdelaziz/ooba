@@ -10,14 +10,14 @@ class DrawerItem extends StatelessWidget {
   const DrawerItem({@required this.name, @required this.onTap});
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        InkWell(
-          onTap: onTap,
-          hoverColor: Colors.transparent,
-          splashColor: Colors.transparent,
-          highlightColor: Colors.transparent,
-          child: Row(
+    return InkWell(
+      onTap: onTap,
+      hoverColor: Colors.transparent,
+      splashColor: Colors.transparent,
+      highlightColor: Colors.transparent,
+      child: Column(
+        children: [
+          Row(
             children: [
               Text(name),
               Spacer(),
@@ -28,14 +28,14 @@ class DrawerItem extends StatelessWidget {
               ),
             ],
           ),
-        ),
-        space(height: 10),
-        Divider(
-          height: 1,
-          color: Colors.grey.withOpacity(0.5),
-        ),
-        space(height: 25)
-      ],
+          space(height: 10),
+          Divider(
+            height: 1,
+            color: Colors.grey.withOpacity(0.5),
+          ),
+          space(height: 25)
+        ],
+      ),
     );
   }
 }

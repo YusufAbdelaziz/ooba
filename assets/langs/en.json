@@ -1,72 +1,109 @@
 {
-  "SignIn": {
-    "signIn": "Sign In",
-    "userNameOrEmail": "Username or Email",
-    "password": "Password",
+  "SignIn" : {
+    "signIn" : "Sign In",
+    "userNameOrEmail" : "Username or Email",
+    "password" : "Password",
     "letsSignYouIn": "Let's sign you in",
-    "welcomeBack": "Welcome back, you've been missed.",
-    "rememberMe": "Remember me",
-    "forgetPassword": "Forget password ?",
-    "signInWithGoogle": "Sign in with Google",
-    "signInWithFacebook": "Sign in with Facebook",
-    "dontHaveAccount": "Don't have an account ?",
-    "signUpNewAccount": "Sign Up",
-    "passwordInvalid": "Please enter a valid password"
+    "welcomeBack" : "Welcome back, you've been missed.",
+    "rememberMe" : "Remember me",
+    "forgetPassword" : "Forget password ?",
+    "signInWithGoogle" : "Sign in with Google",
+    "signInWithFacebook" : "Sign in with Facebook",
+    "dontHaveAccount" : "Don't have an account ?",
+    "signUpNewAccount" : "Sign Up",
+    "passwordInvalid" : "Please enter a valid password"
   },
-  "SignUp": {
-    "alreadyHaveAccount": "Already have an account?",
-    "signUp": "Sign Up",
-    "signIn": "Sign in",
-    "continueWithGoogle": "Continue with Google",
-    "continueWithFacebook": "Continue with Facebook",
-    "createYouAccount": "Create your account",
-    "joinCommunity": "Join a community of over 200k people !",
-    "username": "Username",
-    "email": "Email",
-    "phone": "Phone",
-    "password": "Password",
-    "confirmPassword": "Confirm Password",
-    "passwordInvalid": "Password is weak, make sure you're using digits,\nuppercase and lowercase characters.",
-    "passwordsNotEqual": "Passwords are not the same, make sure you're\nwriting the same password.",
-    "emailInvalid": "Email is invalid",
-    "usernameInvalid": "Username has to be more than 5 characters",
-    "usernameEmailInvalid": "Enter valid username or email"
+  "SignUp" : {
+    "alreadyHaveAccount" : "Already have an account?",
+    "signUp" : "Sign Up",
+    "signIn" : "Sign in",
+    "continueWithGoogle" : "Continue with Google",
+    "continueWithFacebook" : "Continue with Facebook",
+    "createYouAccount" : "Create your account",
+    "joinCommunity" : "Join a community of over 200k people !",
+    "username" : "Username",
+    "email" : "Email",
+    "phone" : "Phone",
+    "password" : "Password",
+    "confirmPassword" : "Confirm Password",
+    "passwordInvalid" : "Password is weak, make sure you're using digits,\nuppercase and lowercase characters.",
+    "passwordsNotEqual" : "Passwords are not the same, make sure you're\nwriting the same password.",
+    "emailInvalid" : "Email is invalid",
+    "usernameInvalid" : "Username has to be more than 5 characters",
+    "usernameEmailInvalid" : "Enter valid username or email"
   },
   "ForgetPassword": {
     "resetPassword": "Reset Password",
-    "forgotYourPassword": "Forgot your password ?",
-    "instructions": "Enter your email address and we will send you instructions on how to reset your password.",
-    "email": "Email Address",
-    "emailInvalid": "Email is invalid"
+    "forgotYourPassword" : "Forgot your password ?",
+    "instructions" : "Enter your email address and we will send you instructions on how to reset your password.",
+    "email" : "Email Address",
+    "emailInvalid" : "Email is invalid"
   },
-  "EmailCheck": {
-    "checkYourEmail": "Check your email",
-    "openMyMail": "Open my mail",
-    "returnToSignIn": "Return to Sign in page",
-    "instructions": "We've sent you instructions on how to reset the password (also check the Spam folder)."
+  "EmailCheck" : {
+    "checkYourEmail" : "Check your email",
+    "openMyMail" : "Open my mail",
+    "returnToSignIn" : "Return to Sign in page",
+    "instructions" : "We've sent you instructions on how to reset the password (also check the Spam folder)."
   },
-  "PhoneVerification": {
-    "phoneVerification": "Phone Verification",
+  "PhoneVerification" : {
+    "phoneVerification" : "Phone Verification",
     "header": "Enter the 4 digit code sent to",
-    "subHeader": "We've sent a 4 digit code to your phone number. Please enter the verification code.",
-    "didntReceiveCode": "Didn't Receive the SMS ?",
-    "requestNewCode": "Request new code in",
-    "requestCode": "Request new code"
+    "subHeader" : "We've sent a 4 digit code to your phone number. Please enter the verification code.",
+    "didntReceiveCode" : "Didn't Receive the SMS ?",
+    "requestNewCode" : "Request new code in",
+    "requestCode" : "Request new code"
   },
-  "Drawer": {
-    "men": "Men",
-    "women": "Women",
-    "youth": "Youth",
-    "kids": "Kids",
-    "orderHistory": "Order History",
-    "notification": "Notifications",
-    "settings": "Settings",
-    "logout": "Logout",
-    "favoriteProducts": "Favorite Products"
+  "Drawer" : {
+    "men" : "Men",
+    "women" : "Women",
+    "youth" : "Youth",
+    "kids" : "Kids",
+    "orderHistory" : "Order History",
+    "notification" : "Notifications",
+    "settings" : "Settings",
+    "logout" : "Logout",
+    "favoriteProducts" : "Favorite Products"
   },
-  "ProductDetails": {
-    "productDetails": "تفاصيل المنتج"
+  "ProductDetails" : {
+    "productDetails" : "Product Details",
+    "addToCart" : "Add to cart",
+    "description" : "Description"
   },
+  "VendorProducts" : {
+    "follow" : "Follow",
+    "unFollow" : "Unfollow"
+  },
+  "OrderDetails" : {
+    "orderDetails" : "Order Details",
+    "deliverTo" : "Deliver To",
+    "shippingMethod" : "Shipping Method" ,
+    "subtotal" : "Subtotal",
+    "shipping" : "Shipping",
+    "total" : "Total",
+    "placeTheOrder" : "Place the order",
+    "free" : "Free",
+    "change" : "Change"
+  },
+  "OrderPlaced" : {
+    "congrats" : "Congratulations",
+    "orderPlacedSuccess" : "Your order has been Placed successfully",
+    "returnToMainPage" : "Return to main page"
+  },
+  "OrderHistory" : {
+    "viewDetails" : "View Details",
+    "placedOn" : "Placed On",
+    "amount" : "Amount",
+    "status" : "Status"
+  },
+  "Settings" : {
+    "myProfile" : "My Profile",
+    "currency" : "Currency",
+    "language" : "Language",
+    "address" : "Address",
+    "change" : "Change"
+  },
+
+
   "Address": {
     "myAddresses": "MY ADDRESSES",
     "change": "Change",
