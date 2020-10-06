@@ -1,10 +1,11 @@
-import 'package:Ooba/common/translation_configuration/app_localizations.dart';
-import 'package:Ooba/utilities/space.dart';
-import 'package:Ooba/widgets/auth_pages/custom_button.dart';
-import 'package:Ooba/widgets/common/custom_appbar.dart';
-import 'package:Ooba/widgets/common/custom_text_field.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import '../../common/translation_configuration/app_localizations.dart';
+import '../../utilities/space.dart';
+import '../../widgets/common/custom_appbar.dart';
+import '../../widgets/common/custom_button.dart';
+import '../../widgets/common/custom_text_field.dart';
 
 class AddAddressPage extends StatefulWidget {
   @override
@@ -12,24 +13,66 @@ class AddAddressPage extends StatefulWidget {
 }
 
 class _AddAddressPageState extends State<AddAddressPage> {
-  var _nameController = TextEditingController();
-  var _emailController = TextEditingController();
-  var _phoneController = TextEditingController();
-  var _addressLine1Controller = TextEditingController();
-  var _addressLine2Controller = TextEditingController();
-  var _zipCodeController = TextEditingController();
-  var _countryController = TextEditingController();
-  var _cityController = TextEditingController();
-  var _nameFocusNode = FocusNode();
-  var _emailFocusNode = FocusNode();
-  var _phoneFocusNode = FocusNode();
-  var _addressLine1FocusNode = FocusNode();
-  var _addressLine2FocusNode = FocusNode();
-  var _zipCodeFocusNode = FocusNode();
-  var _countryFocusNode = FocusNode();
-  var _cityFocusNode = FocusNode();
+  TextEditingController _nameController;
+  TextEditingController _emailController;
+  TextEditingController _phoneController;
+  TextEditingController _addressLine1Controller;
+  TextEditingController _addressLine2Controller;
+  TextEditingController _zipCodeController;
+  TextEditingController _countryController;
+  TextEditingController _cityController;
+  FocusNode _nameFocusNode;
+  FocusNode _emailFocusNode;
+  FocusNode _phoneFocusNode;
+  FocusNode _addressLine1FocusNode;
+  FocusNode _addressLine2FocusNode;
+  FocusNode _zipCodeFocusNode;
+  FocusNode _countryFocusNode;
+  FocusNode _cityFocusNode;
 
   bool isDefault = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _nameController = TextEditingController();
+    _emailController = TextEditingController();
+    _phoneController = TextEditingController();
+    _addressLine1Controller = TextEditingController();
+    _addressLine2Controller = TextEditingController();
+    _zipCodeController = TextEditingController();
+    _countryController = TextEditingController();
+    _cityController = TextEditingController();
+    _nameFocusNode = FocusNode();
+    _emailFocusNode = FocusNode();
+    _phoneFocusNode = FocusNode();
+    _addressLine1FocusNode = FocusNode();
+    _addressLine2FocusNode = FocusNode();
+    _zipCodeFocusNode = FocusNode();
+    _countryFocusNode = FocusNode();
+    _cityFocusNode = FocusNode();
+  }
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    _emailController.dispose();
+    _phoneController.dispose();
+    _addressLine1Controller.dispose();
+    _addressLine2Controller.dispose();
+    _zipCodeController.dispose();
+    _countryController.dispose();
+    _cityController.dispose();
+    _nameFocusNode.dispose();
+    _emailFocusNode.dispose();
+    _phoneFocusNode.dispose();
+    _addressLine1FocusNode.dispose();
+    _addressLine2FocusNode.dispose();
+    _zipCodeFocusNode.dispose();
+    _countryFocusNode.dispose();
+    _cityFocusNode.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,10 +85,12 @@ class _AddAddressPageState extends State<AddAddressPage> {
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 30),
           child: ListView(
+            physics: BouncingScrollPhysics(),
             children: [
               Text(
                 AppLocalizations.of(context).translate('Address.header'),
-                style: Theme.of(context).textTheme.headline5,textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.headline5,
+                textAlign: TextAlign.center,
               ),
               space(height: 20),
               CustomTextField(
@@ -113,20 +158,27 @@ class _AddAddressPageState extends State<AddAddressPage> {
                 children: [
                   Text(
                     AppLocalizations.of(context).translate('Address.setDefault'),
-                    style: Theme.of(context)
-                        .textTheme
-                        .headline2
-                        .copyWith(fontSize: 16),
+                    style: Theme.of(context).textTheme.headline2.copyWith(fontSize: 16),
                   ),
-                  CupertinoSwitch(value: isDefault, onChanged: (bool value) { setState(() { isDefault = value; }); })
+                  CupertinoSwitch(
+                      activeColor: Theme.of(context).primaryColor,
+                      value: isDefault,
+                      onChanged: (bool value) {
+                        setState(() {
+                          isDefault = value;
+                        });
+                      })
                 ],
               ),
               space(height: 20),
-              CustomButton(
-                  color: Theme.of(context).primaryColor,
-                  onTap: (){},
-                  label:
-                  AppLocalizations.of(context).translate('Address.save')),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 30),
+                child: CustomButton(
+                    color: Theme.of(context).primaryColor,
+                    onTap: () {},
+                    label: AppLocalizations.of(context).translate('Address.save')),
+              ),
+              space(height: 10),
             ],
           ),
         ));

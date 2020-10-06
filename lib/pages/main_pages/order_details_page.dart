@@ -1,3 +1,4 @@
+import 'package:Ooba/pages/address/my_address_page.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 
@@ -75,7 +76,8 @@ class OrderDetailsPage extends StatelessWidget {
                       style: Theme.of(context).textTheme.headline4,
                     ),
                     InkWell(
-                      onTap: () => print('change'),
+                      onTap: () => Navigator.of(context).push(
+                          PageTransition(type: PageTransitionType.fade, child: MyAddressPage())),
                       child: Padding(
                         padding: const EdgeInsetsDirectional.only(top: 8, bottom: 8, start: 8),
                         child: Text(
@@ -191,8 +193,8 @@ class OrderDetailsPage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 50),
               child: CustomButton(
-                onTap: () => Navigator.of(context).push(PageTransition(
-                    child: OrderPlacedPage(), type: PageTransitionType.fade)),
+                onTap: () => Navigator.of(context)
+                    .push(PageTransition(child: OrderPlacedPage(), type: PageTransitionType.fade)),
                 color: Theme.of(context).primaryColor,
                 label: AppLocalizations.of(context).translate('OrderDetails.placeTheOrder'),
               ),

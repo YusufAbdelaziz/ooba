@@ -1,4 +1,6 @@
+import 'package:Ooba/pages/address/my_address_page.dart';
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 
 import '../../common/translation_configuration/app_localizations.dart';
 import '../../widgets/common/custom_appbar.dart';
@@ -34,7 +36,8 @@ class SettingsPage extends StatelessWidget {
                       : "English"),
               SettingsItem(
                   header: AppLocalizations.of(context).translate('Settings.address'),
-                  action: null,
+                  action: () => Navigator.of(context)
+                      .push(PageTransition(type: PageTransitionType.fade, child: MyAddressPage())),
                   title: 'London, UK')
             ],
           )),
