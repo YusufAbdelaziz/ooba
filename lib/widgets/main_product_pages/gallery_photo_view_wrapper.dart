@@ -1,4 +1,3 @@
-import 'package:Ooba/pages/main_pages/product_detail_page.dart';
 import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
@@ -83,7 +82,7 @@ class _GalleryPhotoViewWrapperState extends State<GalleryPhotoViewWrapper> {
   }
 
   PhotoViewGalleryPageOptions _buildItem(BuildContext context, int index) {
-    final item = galleryItems[index];
+    final item = widget.galleryItems[index];
     return PhotoViewGalleryPageOptions(
       imageProvider: AssetImage(item),
       initialScale: PhotoViewComputedScale.contained,

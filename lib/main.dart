@@ -1,4 +1,3 @@
-import 'package:Ooba/blocs/global_blocs/main_cubit/main_cubit.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -6,6 +5,8 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'blocs/global_blocs/auth/auth_cubit.dart';
 import 'blocs/global_blocs/language/language_bloc.dart';
+import 'blocs/global_blocs/main_cubit/main_cubit.dart';
+import 'blocs/main_pages_bloc/products_bloc/products_bloc.dart';
 import 'common/bloc_observer.dart';
 import 'common/custom_theme_mode.dart';
 import 'common/translation_configuration/app_localizations.dart';
@@ -64,7 +65,8 @@ class MainApp extends StatelessWidget {
         if (state is AuthPages) {
           widget = SignInPage();
         } else if (state is MainPages) {
-          widget = MainProductsPage();
+          widget = BlocProvider<ProductsBloc>(
+              create: (_) => ProductsBloc()..add(ProductsFetched()), child: MainProductsPage());
         }
         return widget;
       },

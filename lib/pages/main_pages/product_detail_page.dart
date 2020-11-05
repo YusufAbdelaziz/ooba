@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:Ooba/models/product.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
@@ -19,12 +20,16 @@ import '../../widgets/common/vendor_tile.dart';
 import '../../widgets/main_product_pages/gallery_photo_view_wrapper.dart';
 
 class ProductDetailPage extends StatelessWidget {
+  final Product product;
   final dummyText =
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean in elit eget quam interdum ultrices. Cras eget enim in lacus lacinia iaculis sit amet at eros. Sed nec accumsan orci. Quisque interdum pharetra finibus. Sed quis lorem sit amet justo sollicitudin varius id in metus. Proin ultricies lacus massa, et porttitor augue tempor luctus. Cras tortor tortor, mattis ac laoreet ut, tempus sit amet nibh.Aliquam leo enim, mollis et facilisis et, efficitur eget augue. Nam vel ligula sed nulla faucibus tristique eget ac ante. Ut dapibus dui eget ex accumsan bibendum. Quisque tincidunt tellus efficitur felis lacinia, sed ultrices dui pharetra. Aenean consectetur non sapien eget tincidunt. Fusce interdum varius diam vel ornare. Phasellus interdum vulputate libero et pharetra. Nulla vel lorem malesuada, auctor justo ut, iaculis ipsum. Donec pharetra vitae lectus sit amet gravida. Fusce congue, augue sed congue venenatis, lorem neque cursus dolor, quis porta enim ante sed orci. Quisque accumsan velit eu velit varius euismod. Vestibulum elementum malesuada dolor ac convallis. Proin quis vulputate leo.Phasellus lorem quam, sodales non urna et, feugiat suscipit justo. Donec vel blandit erat. Mauris aliquet diam ac scelerisque rutrum. Suspendisse dictum nisl metus, sit amet accumsan nulla blandit eu. Ut et lectus at turpis tempus dignissim sit amet vel leo. Proin quis fermentum est, id imperdiet ante. Donec augue purus, pretium varius elementum et, tincidunt congue neque.';
+
+  const ProductDetailPage({Key key, @required this.product}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
+
     return MultiBlocProvider(
       providers: [
         BlocProvider<GallerySwitcherCubit>(create: (_) => GallerySwitcherCubit()),
@@ -68,7 +73,7 @@ class ProductDetailPage extends StatelessWidget {
                       Spacer(),
                       Padding(
                         padding: const EdgeInsets.only(bottom: 15.0),
-                        child: AutoSizeText('White T-Shirt',
+                        child: AutoSizeText(product.name ?? '',
                             textScaleFactor: MediaQuery.of(context).textScaleFactor,
                             style: Theme.of(context).textTheme.headline1.copyWith(
                                   fontWeight: FontWeight.w200,
@@ -84,7 +89,7 @@ class ProductDetailPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       AutoSizeText(
-                        '\$259.99',
+                        product.price + 'KD',
                         style: Theme.of(context)
                             .textTheme
                             .headline1
@@ -168,13 +173,18 @@ class ProductDetailPage extends StatelessWidget {
                 width: width,
                 top: -50,
                 child: CarouselSlider.builder(
-                    itemCount: galleryItems.length,
+                    itemCount: product.imagesUrl.length,
                     itemBuilder: (context, i) => GestureDetector(
                           onTap: () => open(context, i),
-                          child: Image.asset(
-                            galleryItems[i],
-                            fit: BoxFit.fitHeight,
-                          ),
+                          child: product.imagesUrl[i] != null
+                              ? Image.network(
+                                  product.imagesUrl[i],
+                                  fit: BoxFit.fitHeight,
+                                )
+                              : Image.asset(
+                                  'assets/images/product.png',
+                                  fit: BoxFit.contain,
+                                ),
                         ),
                     options: CarouselOptions(
                         height: height / 2,
@@ -197,12 +207,16 @@ class ProductDetailPage extends StatelessWidget {
                     shrinkWrap: true,
                     separatorBuilder: (context, i) => space(width: 5),
                     scrollDirection: Axis.horizontal,
-                    itemCount: galleryItems.length,
+                    itemCount: product.imagesUrl.length,
                     itemBuilder: (context, i) => Container(
                         decoration: BoxDecoration(
                           border: Border.all(color: state == i ? Colors.white : Colors.transparent),
                         ),
-                        child: Image.asset(galleryItems[i])),
+                        child: product.imagesUrl[i] != null
+                            ? Image.network(product.imagesUrl[i])
+                            : Image.asset(
+                                'assets/images/product.png',
+                              )),
                   ),
                 ),
               ),
@@ -218,7 +232,7 @@ class ProductDetailPage extends StatelessWidget {
       PageTransition(
         type: PageTransitionType.fade,
         child: GalleryPhotoViewWrapper(
-          galleryItems: galleryItems,
+          galleryItems: product.imagesUrl,
           backgroundDecoration: const BoxDecoration(
             color: Colors.white,
           ),
@@ -229,5 +243,3 @@ class ProductDetailPage extends StatelessWidget {
     );
   }
 }
-
-final List<String> galleryItems = List<String>.generate(5, (index) => 'assets/images/model.png');

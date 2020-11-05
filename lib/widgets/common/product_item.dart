@@ -1,55 +1,81 @@
-import 'package:Ooba/utilities/space.dart';
-import 'package:Ooba/widgets/common/favourite_button.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
+
+import '../../models/product.dart';
+import '../../pages/main_pages/product_detail_page.dart';
+import '../../utilities/space.dart';
+import '../../widgets/common/favourite_button.dart';
 
 class ProductItem extends StatelessWidget {
+  final Product product;
+
+  const ProductItem({@required this.product});
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Stack(
-          children: [
-            Container(
-              padding: EdgeInsets.all(5),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5),
-                  border: Border.all(color: Theme.of(context).primaryColor, width: 0.8)),
-              child: Image.asset(
-                'assets/images/product.png',
-                fit: BoxFit.cover,
-              ),
-            ),
-            Positioned(
-                top: 10,
-                left: 10,
-                child: FavouriteButton(
-                  size: 16,
-                  radius: 15,
-                ))
-          ],
-        ),
-        space(height: 10),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 5.0),
-          child: Column(
+    return InkWell(
+      highlightColor: Colors.transparent,
+      hoverColor: Colors.transparent,
+      splashColor: Colors.transparent,
+      onTap: () => Navigator.of(context).push(PageTransition(
+          type: PageTransitionType.fade,
+          child: ProductDetailPage(
+            product: product,
+          ))),
+      child: Column(
+        children: [
+          Stack(
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text('White T-Shirt'),
-                  Text('20\$'),
-                ],
-              ),
               Container(
-                alignment: AlignmentDirectional.centerStart,
-                child: Text(
-                  'By Wahab',
-                ),
-              ),
+                  padding: EdgeInsets.all(5),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5),
+                      border: Border.all(color: Theme.of(context).primaryColor, width: 0.8)),
+                  child: product.imagesUrl.length != 0 && product.imagesUrl[0] != null
+                      ? FadeInImage(
+                          placeholder: AssetImage('assets/images/product.png'),
+                          image: NetworkImage(product.imagesUrl[0]),
+                        )
+                      : Image.asset(
+                          'assets/images/product.png',
+                          fit: BoxFit.contain,
+                        )),
+              Positioned(
+                  top: 10,
+                  left: 10,
+                  child: FavouriteButton(
+                    size: 16,
+                    radius: 15,
+                  ))
             ],
           ),
-        )
-      ],
+          space(height: 10),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 5.0),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                        child: Text(
+                      product.name,
+                      overflow: TextOverflow.ellipsis,
+                    )),
+                    Text(product.price + " KD"),
+                  ],
+                ),
+                Container(
+                  alignment: AlignmentDirectional.centerStart,
+                  child: Text(
+                    'By Wahab',
+                  ),
+                ),
+              ],
+            ),
+          )
+        ],
+      ),
     );
   }
 }

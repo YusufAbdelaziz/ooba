@@ -1,7 +1,8 @@
-import 'package:Ooba/common/translation_configuration/app_localizations.dart';
-import 'package:Ooba/model/address.dart';
+
 import 'package:flutter/material.dart';
 
+import '../../common/translation_configuration/app_localizations.dart';
+import '../../models/address.dart';
 class AddressCard extends StatelessWidget implements PreferredSizeWidget {
   final AddressModel address;
 
