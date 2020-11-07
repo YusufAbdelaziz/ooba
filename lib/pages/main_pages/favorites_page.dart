@@ -15,7 +15,9 @@ class FavoritesPage extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.only(top: 10),
-        child: ProductsGrid(),
+        child: ProductsGrid(
+          products: [],
+        ),
       ),
     );
   }

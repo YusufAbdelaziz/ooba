@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 
 import '../../common/translation_configuration/app_localizations.dart';
-import '../../model/address.dart';
+import '../../models/address.dart';
 import '../../pages/address/add_address_page.dart';
 import '../../utilities/space.dart';
 import '../../widgets/address/address_card.dart';
