@@ -5,11 +5,11 @@ import 'package:Ooba/utilities/space.dart';
 import 'package:Ooba/utilities/timer/ticker.dart';
 import 'package:Ooba/utilities/timer/timer_bloc.dart';
 import 'package:Ooba/widgets/common/custom_appbar.dart';
+import 'package:Ooba/widgets/common/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
-import 'file:///C:/Users/yusse/Documents/Work/oppa_app/lib/widgets/common/custom_button.dart';
 
 class PhoneVerificationPage extends StatefulWidget {
   @override
