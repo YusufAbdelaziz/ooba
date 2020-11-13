@@ -30,11 +30,6 @@ class SignInPasswordValid extends PasswordValidationState {
 }
 
 class SignInPasswordInvalid extends PasswordValidationState {
-  final String passwordErrorText;
-
-  SignInPasswordInvalid({
-    @required this.passwordErrorText,
-  });
 
   @override
   List<Object> get props => [];

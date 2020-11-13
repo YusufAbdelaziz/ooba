@@ -24,7 +24,7 @@ void main() async {
       create: (context) => AuthCubit(),
     ),
     BlocProvider<MainCubit>(
-      create: (_) => MainCubit()..authPagesSwitched(),
+      create: (_) => MainCubit()..checkUserValidity(),
     )
   ], child: MyApp()));
 }
@@ -61,7 +61,7 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<MainCubit, MainState>(
       builder: (context, state) {
-        Widget widget;
+        Widget widget = Container(width: 0, height: 0);
         if (state is AuthPages) {
           widget = SignInPage();
         } else if (state is MainPages) {

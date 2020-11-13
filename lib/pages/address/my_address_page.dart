@@ -43,7 +43,10 @@ class MyAddressPage extends StatelessWidget {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 30),
             child: CustomButton(
-              label: AppLocalizations.of(context).translate('Address.addNewAddress'),
+              content: Text(
+                AppLocalizations.of(context).translate('Address.addNewAddress'),
+                style: Theme.of(context).textTheme.button,
+              ),
               color: Theme.of(context).primaryColor,
               onTap: () => Navigator.of(context)
                   .push(PageTransition(child: AddAddressPage(), type: PageTransitionType.fade)),

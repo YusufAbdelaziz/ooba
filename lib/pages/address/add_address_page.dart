@@ -172,12 +172,15 @@ class _AddAddressPageState extends State<AddAddressPage> {
               ),
               space(height: 20),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30),
-                child: CustomButton(
+                  padding: const EdgeInsets.symmetric(horizontal: 30),
+                  child: CustomButton(
                     color: Theme.of(context).primaryColor,
                     onTap: () {},
-                    label: AppLocalizations.of(context).translate('Address.save')),
-              ),
+                    content: Text(
+                      AppLocalizations.of(context).translate('Address.save'),
+                      style: Theme.of(context).textTheme.button,
+                    ),
+                  )),
               space(height: 10),
             ],
           ),

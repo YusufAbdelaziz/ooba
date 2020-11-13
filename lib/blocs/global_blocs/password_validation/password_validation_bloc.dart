@@ -29,9 +29,9 @@ class PasswordValidationBloc extends Bloc<PasswordValidationEvent, PasswordValid
       }
     } else if (event is SignInPasswordChecked) {
       if (Validators.isValidPassword(event.password)) {
-        yield SignUpPasswordsValid();
+        yield SignInPasswordValid();
       } else {
-        yield SignUpPasswordsInvalid();
+        yield SignInPasswordInvalid();
       }
     }
   }

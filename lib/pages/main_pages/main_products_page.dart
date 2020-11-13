@@ -1,3 +1,4 @@
+import 'package:Ooba/widgets/main_product_pages/custom_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:page_transition/page_transition.dart';
@@ -7,6 +8,7 @@ import '../../widgets/common/product_item.dart';
 import '../../widgets/main_product_pages/custom_drawer.dart';
 import '../../widgets/main_product_pages/custom_loading_indicator.dart';
 import '../../widgets/main_product_pages/main_products_app_bar.dart';
+import '../../common/translation_configuration/app_localizations.dart';
 import 'order_details_page.dart';
 
 class MainProductsPage extends StatefulWidget {
@@ -49,19 +51,14 @@ class _MainProductsPageState extends State<MainProductsPage> {
             child: BlocConsumer<ProductsBloc, ProductsState>(
               listener: (context, state) {
                 if (state is ProductsFetchFail) {
-                  Scaffold.of(context).showSnackBar(SnackBar(
-                    content: Text(state.text),
-                    action: SnackBarAction(
-                        label: 'Close',
-                        onPressed: () => Scaffold.of(context).hideCurrentSnackBar()),
-                  ));
+                  CustomSnackBar.showSnackBar(context: context, textMsg: state.text);
                 }
               },
               builder: (context, state) {
                 if (state is ProductsFetchSuccess) {
                   return RefreshIndicator(
                       onRefresh: () async =>
-                          BlocProvider.of<ProductsBloc>(context).add(ProductsFetched()),
+                          BlocProvider.of<ProductsBloc>(context).add(ProductsReloaded()),
                       color: Theme.of(context).primaryColor,
                       child: GridView.builder(
                         controller: _scrollController..addListener(() => _onScroll(context)),
@@ -86,6 +83,12 @@ class _MainProductsPageState extends State<MainProductsPage> {
                       ));
                 } else if (state is LoadingProducts) {
                   return CustomLoadingIndicator();
+                } else if (state is ProductsFetchFail) {
+                  return RefreshIndicator(
+                      onRefresh: () async =>
+                          BlocProvider.of<ProductsBloc>(context).add(ProductsReloaded()),
+                      color: Theme.of(context).primaryColor,
+                      child: ListView());
                 } else {
                   return Container(
                     width: MediaQuery.of(context).size.width,
