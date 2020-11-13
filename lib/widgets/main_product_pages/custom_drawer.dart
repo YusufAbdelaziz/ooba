@@ -1,3 +1,5 @@
+import 'package:Ooba/blocs/global_blocs/auth/auth_cubit.dart';
+import 'package:Ooba/blocs/global_blocs/main_cubit/main_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:page_transition/page_transition.dart';
@@ -92,28 +94,42 @@ class CustomDrawer extends StatelessWidget {
                   }
                 },
               ),
-              InkWell(
-                hoverColor: Colors.transparent,
-                splashColor: Colors.transparent,
-                highlightColor: Colors.transparent,
-                onTap: () {},
-                child: Container(
-                  height: 60,
-                  color: Theme.of(context).primaryColor,
-                  child: Row(
-                    textDirection: TextDirection.ltr,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(AppLocalizations.of(context).translate('Drawer.logout')),
-                      space(width: 10),
-                      Image.asset(
-                        'assets/images/logout.png',
-                        height: 22,
-                        width: 22,
-                      )
-                    ],
-                  ),
-                ),
+              BlocConsumer<AuthCubit, AuthState>(
+                listener: (context, state) {
+                  if (state is LogoutSuccess) {
+                    BlocProvider.of<MainCubit>(context).switchAuthPages();
+                  }
+                },
+                builder: (context, state) {
+                  return Container(
+                    height: 60,
+                    color: Theme.of(context).primaryColor,
+                    child: state is LogoutLoading
+                        ? CustomLoadingIndicator(
+                            verticalPadding: 5,
+                            color: Colors.white,
+                          )
+                        : InkWell(
+                            hoverColor: Colors.transparent,
+                            splashColor: Colors.transparent,
+                            highlightColor: Colors.transparent,
+                            onTap: () => BlocProvider.of<AuthCubit>(context).logout(),
+                            child: Row(
+                              textDirection: TextDirection.ltr,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(AppLocalizations.of(context).translate('Drawer.logout')),
+                                space(width: 10),
+                                Image.asset(
+                                  'assets/images/logout.png',
+                                  height: 22,
+                                  width: 22,
+                                )
+                              ],
+                            ),
+                          ),
+                  );
+                },
               )
             ],
           ),

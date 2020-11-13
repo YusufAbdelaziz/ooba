@@ -39,10 +39,15 @@ class EmailUsernameValidationBloc
     }
   }
 
+
+
   @override
   Stream<Transition<EmailUsernameValidationEvent, EmailUsernameValidationState>> transformEvents(
       Stream<EmailUsernameValidationEvent> events,
       TransitionFunction<EmailUsernameValidationEvent, EmailUsernameValidationState> transitionFn) {
     return super.transformEvents(events.debounceTime(Duration(milliseconds: 300)), transitionFn);
   }
+
+
+
 }

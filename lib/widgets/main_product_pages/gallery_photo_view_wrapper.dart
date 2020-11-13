@@ -57,7 +57,7 @@ class _GalleryPhotoViewWrapperState extends State<GalleryPhotoViewWrapper> {
             PhotoViewGallery.builder(
               scrollPhysics: const BouncingScrollPhysics(),
               builder: _buildItem,
-              itemCount: widget.galleryItems.length,
+              itemCount: widget.galleryItems.isEmpty ? 1 : widget.galleryItems.length,
               loadingBuilder: widget.loadingBuilder,
               backgroundDecoration: widget.backgroundDecoration,
               pageController: widget.pageController,
@@ -82,9 +82,15 @@ class _GalleryPhotoViewWrapperState extends State<GalleryPhotoViewWrapper> {
   }
 
   PhotoViewGalleryPageOptions _buildItem(BuildContext context, int index) {
-    final item = widget.galleryItems[index];
+    String item;
+    if(widget.galleryItems.isEmpty){
+      item = 'assets/images/product.png';
+    }
+    else{
+      item = widget.galleryItems[index];
+    }
     return PhotoViewGalleryPageOptions(
-      imageProvider: AssetImage(item),
+      imageProvider: widget.galleryItems.isNotEmpty ? NetworkImage(item) : AssetImage(item),
       initialScale: PhotoViewComputedScale.contained,
       minScale: PhotoViewComputedScale.contained * (0.5 + index / 10),
       maxScale: PhotoViewComputedScale.covered * 4.1,

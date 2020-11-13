@@ -38,12 +38,18 @@ class EmailCheckPage extends StatelessWidget {
                   CustomButton(
                     onTap: () {},
                     color: Theme.of(context).primaryColor,
-                    label: AppLocalizations.of(context).translate('EmailCheck.openMyMail'),
+                    content: Text(
+                      AppLocalizations.of(context).translate('EmailCheck.openMyMail'),
+                      style: Theme.of(context).textTheme.button,
+                    ),
                   ),
                   CustomButton(
                     onTap: () => Navigator.of(context).popUntil((route) => route.isFirst),
                     color: Theme.of(context).primaryColor,
-                    label: AppLocalizations.of(context).translate('EmailCheck.returnToSignIn'),
+                    content: Text(
+                      AppLocalizations.of(context).translate('EmailCheck.returnToSignIn'),
+                      style: Theme.of(context).textTheme.button,
+                    ),
                   ),
                 ],
               ),

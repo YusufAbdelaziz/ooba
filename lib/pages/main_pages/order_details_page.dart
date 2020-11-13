@@ -196,7 +196,10 @@ class OrderDetailsPage extends StatelessWidget {
                 onTap: () => Navigator.of(context)
                     .push(PageTransition(child: OrderPlacedPage(), type: PageTransitionType.fade)),
                 color: Theme.of(context).primaryColor,
-                label: AppLocalizations.of(context).translate('OrderDetails.placeTheOrder'),
+                content: Text(
+                  AppLocalizations.of(context).translate('OrderDetails.placeTheOrder'),
+                  style: Theme.of(context).textTheme.button,
+                ),
               ),
             ),
             space(height: 10),

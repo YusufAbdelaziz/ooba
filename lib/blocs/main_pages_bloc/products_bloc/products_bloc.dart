@@ -17,6 +17,7 @@ class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
   Stream<ProductsState> mapEventToState(ProductsEvent event) async* {
     var currentState = state;
     if (event is ProductsFetched && !_hasReachedMax(currentState)) {
+      print('i aaam fetching nigga');
       try {
         if (currentState is LoadingProducts) {
           final products = await ProductsRepo.fetchProducts(page: _page);
@@ -34,10 +35,16 @@ class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
         }
       } catch (e, stacktrace) {
         print(stacktrace);
+        print(e);
         yield ProductsFetchFail(text: e.toString());
       }
+    } else if (event is ProductsReloaded) {
+      yield(LoadingProducts());
+      _page = 0;
+      add(ProductsFetched());
     }
   }
+
 
   bool _hasReachedMax(ProductsState state) => state is ProductsFetchSuccess && state.hasReachedMax;
 

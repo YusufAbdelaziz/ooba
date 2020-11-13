@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 
 class CustomLoadingIndicator extends StatelessWidget {
+  final Color color;
+  final double verticalPadding;
+  CustomLoadingIndicator({this.color , this.verticalPadding = 10.0});
   @override
   Widget build(BuildContext context) {
     return Center(
         child: Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10.0),
+      padding:  EdgeInsets.symmetric(vertical: verticalPadding),
       child: CircularProgressIndicator(
-        valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor),
+        valueColor: AlwaysStoppedAnimation<Color>(color ?? Theme.of(context).primaryColor),
       ),
     ));
   }

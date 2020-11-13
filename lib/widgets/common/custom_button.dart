@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 class CustomButton extends StatelessWidget {
   final String logoAsset;
-  final String label;
+  final Widget content;
   final Color color;
   final void Function() onTap;
-  const CustomButton({this.logoAsset, @required this.label, @required this.color, this.onTap});
+  const CustomButton({this.logoAsset, @required this.content, @required this.color, this.onTap});
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -24,10 +24,7 @@ class CustomButton extends StatelessWidget {
                 alignment: Alignment.center,
               )),
             Spacer(),
-            Text(
-              label,
-              style: Theme.of(context).textTheme.button,
-            ),
+            content,
             Spacer(
               flex: logoAsset != null ? 2 : 1,
             )

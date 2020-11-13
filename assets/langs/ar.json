@@ -1,4 +1,5 @@
 {
+  "close" : "إغلاق",
   "SignIn" : {
     "signIn" : "تسجيل الدخول",
     "userNameOrEmail" : "إسم المستخدم أو البريد الإلكتروني",
@@ -11,7 +12,8 @@
     "signInWithFacebook" : "تسجيل الدخول بفيسبوك",
     "dontHaveAccount" : "ليس لديك حساب؟",
     "signUpNewAccount" : "سجل حساب جديد",
-    "passwordInvalid" : "بالرجاء إدخال كلمة مرور صالحة"
+    "passwordInvalid" : "بالرجاء إدخال كلمة مرور صالحة",
+    "enterValidEmailAndPass" : "أدخل كلمة مرور وإسم مستخدم او إيميل صالحين"
   },
   "SignUp" : {
     "alreadyHaveAccount" : "لديك حساب بالفعل؟",
@@ -30,7 +32,8 @@
     "passwordsNotEqual" : "كلمتا المرور غير متوافقتان، بالرجاء التأكد من كتابة\nنفس كلمة المرور",
     "emailInvalid" : "البريد الإلكتروني غير صالح",
     "usernameInvalid" : "إسم المستخدم يجب أن يكون أكثر من خمسة حروف",
-    "usernameEmailInvalid" : "بالرجاء إدخال إيميل أو اسم مستخدم صحيح"
+    "usernameEmailInvalid" : "بالرجاء إدخال إيميل أو اسم مستخدم صحيح",
+    "fillCorrectInfo" : "بالرجاء إدخال بيانات صحيحة"
   },
   "ForgetPassword": {
     "resetPassword": "تغيير كلمة المرور",

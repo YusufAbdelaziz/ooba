@@ -1,23 +1,26 @@
-import 'package:Ooba/blocs/global_blocs/email_username_validation/email_username_validation_bloc.dart';
-import 'package:Ooba/blocs/global_blocs/language/language_bloc.dart';
-import 'package:Ooba/blocs/global_blocs/main_cubit/main_cubit.dart';
-import 'package:Ooba/blocs/global_blocs/password_validation/password_validation_bloc.dart';
-import 'package:Ooba/blocs/global_blocs/password_visibility/password_visibility_cubit.dart';
-import 'package:Ooba/blocs/global_blocs/state_handler_cubit/state_handler_cubit.dart';
-import 'package:Ooba/common/translation_configuration/app_localizations.dart';
-import 'package:Ooba/common/translation_configuration/shared_preferences_service.dart';
-import 'package:Ooba/pages/auth_pages/forget_password/forget_password_page.dart';
-import 'package:Ooba/pages/auth_pages/sign_up/sign_up_page.dart';
-import 'package:Ooba/utilities/space.dart';
-import 'package:Ooba/widgets/auth_pages/custom_auth_footer.dart';
-import 'package:Ooba/widgets/auth_pages/custom_auth_header.dart';
-import 'package:Ooba/widgets/common/custom_appbar.dart';
-import 'package:Ooba/widgets/common/custom_button.dart';
-import 'package:Ooba/widgets/common/custom_text_field.dart';
+import 'package:Ooba/widgets/main_product_pages/custom_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:page_transition/page_transition.dart';
 
+import '../../../blocs/global_blocs/auth/auth_cubit.dart';
+import '../../../blocs/global_blocs/email_username_validation/email_username_validation_bloc.dart';
+import '../../../blocs/global_blocs/language/language_bloc.dart';
+import '../../../blocs/global_blocs/main_cubit/main_cubit.dart';
+import '../../../blocs/global_blocs/password_validation/password_validation_bloc.dart';
+import '../../../blocs/global_blocs/password_visibility/password_visibility_cubit.dart';
+import '../../../blocs/global_blocs/state_handler_cubit/state_handler_cubit.dart';
+import '../../../common/translation_configuration/app_localizations.dart';
+import '../../../common/translation_configuration/shared_preferences_service.dart';
+import '../../../pages/auth_pages/forget_password/forget_password_page.dart';
+import '../../../pages/auth_pages/sign_up/sign_up_page.dart';
+import '../../../utilities/space.dart';
+import '../../../widgets/auth_pages/custom_auth_footer.dart';
+import '../../../widgets/auth_pages/custom_auth_header.dart';
+import '../../../widgets/common/custom_appbar.dart';
+import '../../../widgets/common/custom_button.dart';
+import '../../../widgets/common/custom_text_field.dart';
+import '../../../widgets/main_product_pages/custom_loading_indicator.dart';
 
 class SignInPage extends StatefulWidget {
   @override
@@ -29,6 +32,7 @@ class _SignInPageState extends State<SignInPage> {
   var _passwordController = TextEditingController();
   var _usernameEmailFocusNode = FocusNode();
   var _passwordFocusNode = FocusNode();
+  bool isRemember = false;
 
   @override
   void dispose() {
@@ -104,10 +108,10 @@ class _SignInPageState extends State<SignInPage> {
                             BlocBuilder<PasswordValidationBloc, PasswordValidationState>(
                               builder: (context, state) {
                                 String passwordErrorTxt;
-                                if (state is SignUpPasswordsInvalid) {
+                                if (state is SignInPasswordInvalid) {
                                   passwordErrorTxt = AppLocalizations.of(context)
                                       .translate('SignIn.passwordInvalid');
-                                } else if (state is SignUpPasswordsValid) {
+                                } else if (state is SignInPasswordValid) {
                                   passwordErrorTxt = null;
                                 }
                                 return BlocBuilder<PasswordVisibilityCubit,
@@ -149,12 +153,11 @@ class _SignInPageState extends State<SignInPage> {
                                   width: 24,
                                   child: BlocBuilder<StateHandlerCubit, StateHandlerState>(
                                       builder: (context, state) {
-                                    bool value = false;
                                     if (state is StateSwitched) {
-                                      value = state.value;
+                                      isRemember = state.value;
                                     }
                                     return Checkbox(
-                                      value: value,
+                                      value: isRemember,
                                       activeColor: Colors.black,
                                       checkColor: Theme.of(context).primaryColor,
                                       onChanged: (val) =>
@@ -188,24 +191,72 @@ class _SignInPageState extends State<SignInPage> {
                               padding: const EdgeInsets.symmetric(horizontal: 15),
                               child: Column(
                                 children: [
-                                  CustomButton(
-                                      color: Theme.of(context).primaryColor,
-                                      onTap: () =>
-                                          BlocProvider.of<MainCubit>(context).mainPagesSwitched(),
-                                      label:
-                                          AppLocalizations.of(context).translate('SignIn.signIn')),
-                                  CustomButton(
-                                    color: Theme.of(context).buttonColor,
-                                    label: AppLocalizations.of(context)
-                                        .translate('SignIn.signInWithGoogle'),
-                                    logoAsset: 'assets/images/google.png',
+                                  BlocConsumer<AuthCubit, AuthState>(
+                                    listener: (context, state) {
+                                      if (state is LoginSuccess) {
+                                        BlocProvider.of<MainCubit>(context).switchMainPages();
+                                      } else if (state is LoginFail) {
+                                        CustomSnackBar.showSnackBar(
+                                            context: context, textMsg: state.errorMsg.toString());
+                                      }
+                                    },
+                                    builder: (context, state) {
+                                      bool isLoading = state is LoginLoading ? true : false;
+                                      return CustomButton(
+                                        color: Theme.of(context).primaryColor,
+                                        content: isLoading
+                                            ? CustomLoadingIndicator(
+                                                color: Colors.white,
+                                                verticalPadding: 5,
+                                              )
+                                            : Text(
+                                                AppLocalizations.of(context)
+                                                    .translate('SignIn.signIn'),
+                                                style: Theme.of(context).textTheme.button,
+                                              ),
+                                        onTap: () {
+                                          /// Check whether the username or email and password fields
+                                          /// are valid.
+                                          final usernameEmailState =
+                                              BlocProvider.of<EmailUsernameValidationBloc>(context)
+                                                  .state;
+                                          final passwordState =
+                                              BlocProvider.of<PasswordValidationBloc>(context)
+                                                  .state;
+                                          if (usernameEmailState is UsernameEmailValid &&
+                                              passwordState is SignInPasswordValid) {
+                                            print('isRemember : $isRemember');
+                                            BlocProvider.of<AuthCubit>(context).login(
+                                                usernameOrEmail: _usernameEmailController.text,
+                                                password: _passwordController.text,
+                                                isRemembered: isRemember);
+                                          } else {
+                                            Scaffold.of(context).showSnackBar(SnackBar(
+                                              content: Text(AppLocalizations.of(context)
+                                                  .translate('SignIn.enterValidEmailAndPass')),
+                                              action: SnackBarAction(
+                                                  label: 'Close',
+                                                  textColor: Theme.of(context).primaryColor,
+                                                  onPressed: () =>
+                                                      Scaffold.of(context).hideCurrentSnackBar()),
+                                            ));
+                                          }
+                                        },
+                                      );
+                                    },
                                   ),
-                                  CustomButton(
-                                    color: Theme.of(context).buttonColor,
-                                    label: AppLocalizations.of(context)
-                                        .translate('SignIn.signInWithFacebook'),
-                                    logoAsset: 'assets/images/facebook.png',
-                                  ),
+                                  // CustomButton(
+                                  //   color: Theme.of(context).buttonColor,
+                                  //   label: AppLocalizations.of(context)
+                                  //       .translate('SignIn.signInWithGoogle'),
+                                  //   logoAsset: 'assets/images/google.png',
+                                  // ),
+                                  // CustomButton(
+                                  //   color: Theme.of(context).buttonColor,
+                                  //   label: AppLocalizations.of(context)
+                                  //       .translate('SignIn.signInWithFacebook'),
+                                  //   logoAsset: 'assets/images/facebook.png',
+                                  // ),
                                   space(height: 10),
                                   CustomAuthFooter(
                                     onTap: () => Navigator.of(context).push(PageTransition(

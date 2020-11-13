@@ -30,8 +30,12 @@ class OrderPlacedPage extends StatelessWidget {
               space(height: 15),
               CustomButton(
                 color: Theme.of(context).primaryColor,
+                content: Text(
+                  AppLocalizations.of(context).translate('OrderPlaced.returnToMainPage'),
+                  style: Theme.of(context).textTheme.button,
+                ),
                 onTap: () => Navigator.of(context).popUntil((route) => route.isFirst),
-                label: AppLocalizations.of(context).translate('OrderPlaced.returnToMainPage'),
+
               )
             ],
           ),

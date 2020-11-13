@@ -1,4 +1,5 @@
 {
+  "close" : "Close",
   "SignIn" : {
     "signIn" : "Sign In",
     "userNameOrEmail" : "Username or Email",
@@ -11,7 +12,8 @@
     "signInWithFacebook" : "Sign in with Facebook",
     "dontHaveAccount" : "Don't have an account ?",
     "signUpNewAccount" : "Sign Up",
-    "passwordInvalid" : "Please enter a valid password"
+    "passwordInvalid" : "Please enter a valid password",
+    "enterValidEmailAndPass" : "Please enter a valid password and email or username"
   },
   "SignUp" : {
     "alreadyHaveAccount" : "Already have an account?",
@@ -30,7 +32,8 @@
     "passwordsNotEqual" : "Passwords are not the same, make sure you're\nwriting the same password.",
     "emailInvalid" : "Email is invalid",
     "usernameInvalid" : "Username has to be more than 5 characters",
-    "usernameEmailInvalid" : "Enter valid username or email"
+    "usernameEmailInvalid" : "Enter valid username or email",
+    "fillCorrectInfo" : "Please fill your information correctly"
   },
   "ForgetPassword": {
     "resetPassword": "Reset Password",

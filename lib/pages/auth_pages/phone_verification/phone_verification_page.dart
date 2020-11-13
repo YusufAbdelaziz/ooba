@@ -1,15 +1,15 @@
 import 'dart:async';
 
-import 'package:Ooba/common/translation_configuration/app_localizations.dart';
-import 'package:Ooba/utilities/space.dart';
-import 'package:Ooba/utilities/timer/ticker.dart';
-import 'package:Ooba/utilities/timer/timer_bloc.dart';
-import 'package:Ooba/widgets/common/custom_appbar.dart';
-import 'package:Ooba/widgets/common/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
+import '../../../common/translation_configuration/app_localizations.dart';
+import '../../../utilities/space.dart';
+import '../../../utilities/timer/ticker.dart';
+import '../../../utilities/timer/timer_bloc.dart';
+import '../../../widgets/common/custom_appbar.dart';
+import '../../../widgets/common/custom_button.dart';
 
 class PhoneVerificationPage extends StatefulWidget {
   @override
@@ -158,8 +158,11 @@ class _PhoneVerificationPageState extends State<PhoneVerificationPage> {
                                 color: state is Finished
                                     ? Theme.of(context).primaryColor
                                     : Colors.black54,
-                                label: AppLocalizations.of(context)
-                                    .translate('PhoneVerification.requestCode'),
+                                content: Text(
+                                  AppLocalizations.of(context)
+                                      .translate('PhoneVerification.requestCode'),
+                                  style: Theme.of(context).textTheme.button,
+                                ),
                                 onTap: () {
                                   if (state is Finished) {
                                     BlocProvider.of<TimerBloc>(context).add(Reset());

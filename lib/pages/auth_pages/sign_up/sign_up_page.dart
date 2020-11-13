@@ -1,19 +1,22 @@
-import 'package:Ooba/blocs/global_blocs/email_username_validation/email_username_validation_bloc.dart';
-import 'package:Ooba/blocs/global_blocs/language/language_bloc.dart';
-import 'package:Ooba/blocs/global_blocs/password_validation/password_validation_bloc.dart';
-import 'package:Ooba/blocs/global_blocs/password_visibility/password_visibility_cubit.dart';
-import 'package:Ooba/common/translation_configuration/app_localizations.dart';
-import 'package:Ooba/common/translation_configuration/shared_preferences_service.dart';
-import 'package:Ooba/pages/auth_pages/phone_verification/phone_verification_page.dart';
-import 'package:Ooba/utilities/space.dart';
-import 'package:Ooba/widgets/auth_pages/custom_auth_footer.dart';
-import 'package:Ooba/widgets/auth_pages/custom_auth_header.dart';
-import 'package:Ooba/widgets/common/custom_appbar.dart';
-import 'package:Ooba/widgets/common/custom_button.dart';
-import 'package:Ooba/widgets/common/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:page_transition/page_transition.dart';
+
+import '../../../widgets/common/custom_button.dart';
+import '../../../blocs/global_blocs/auth/auth_cubit.dart';
+import '../../../blocs/global_blocs/email_username_validation/email_username_validation_bloc.dart';
+import '../../../blocs/global_blocs/language/language_bloc.dart';
+import '../../../blocs/global_blocs/main_cubit/main_cubit.dart';
+import '../../../blocs/global_blocs/password_validation/password_validation_bloc.dart';
+import '../../../blocs/global_blocs/password_visibility/password_visibility_cubit.dart';
+import '../../../common/translation_configuration/app_localizations.dart';
+import '../../../common/translation_configuration/shared_preferences_service.dart';
+import '../../../utilities/space.dart';
+import '../../../widgets/auth_pages/custom_auth_footer.dart';
+import '../../../widgets/auth_pages/custom_auth_header.dart';
+import '../../../widgets/common/custom_appbar.dart';
+import '../../../widgets/common/custom_text_field.dart';
+import '../../../widgets/main_product_pages/custom_snack_bar.dart';
+import '../../../widgets/main_product_pages/custom_loading_indicator.dart';
 
 class SignUpPage extends StatefulWidget {
   @override
@@ -232,25 +235,66 @@ class _SignUpPageState extends State<SignUpPage> {
                               padding: const EdgeInsets.symmetric(horizontal: 15),
                               child: Column(
                                 children: [
-                                  CustomButton(
-                                    color: Theme.of(context).primaryColor,
-                                    label: AppLocalizations.of(context).translate('SignUp.signUp'),
-                                    onTap: () => Navigator.of(context).push(PageTransition(
-                                        type: PageTransitionType.fade,
-                                        child: PhoneVerificationPage())),
-                                  ),
-                                  CustomButton(
-                                    color: Theme.of(context).buttonColor,
-                                    label: AppLocalizations.of(context)
-                                        .translate('SignUp.continueWithGoogle'),
-                                    logoAsset: 'assets/images/google.png',
-                                  ),
-                                  CustomButton(
-                                    color: Theme.of(context).buttonColor,
-                                    label: AppLocalizations.of(context)
-                                        .translate('SignUp.continueWithFacebook'),
-                                    logoAsset: 'assets/images/facebook.png',
-                                  ),
+                                  BlocConsumer<AuthCubit, AuthState>(listener: (context, state) {
+                                    if (state is SignUpSuccess) {
+                                      Navigator.of(context).pop();
+                                      BlocProvider.of<MainCubit>(context).switchMainPages();
+                                    } else if (state is SignUpFail) {
+                                      CustomSnackBar.showSnackBar(
+                                          context: context, textMsg: state.errorMsg);
+                                    }
+                                  }, builder: (context, state) {
+                                    return CustomButton(
+                                      color: Theme.of(context).primaryColor,
+                                      content: state is SignUpLoading
+                                          ? CustomLoadingIndicator(
+                                              verticalPadding: 5,
+                                              color: Colors.white,
+                                            )
+                                          : Text(
+                                              AppLocalizations.of(context)
+                                                  .translate('SignUp.signUp'),
+                                              style: Theme.of(context).textTheme.button,
+                                            ),
+                                      onTap: () {
+                                        print('I aaam signing up');
+                                        final passwordState =
+                                            BlocProvider.of<PasswordValidationBloc>(context).state;
+                                        print('passwordState --> $passwordState');
+                                        final isValidEmailAndUsername =
+                                            areEmailAndUsernameValid(context);
+                                        print(
+                                            'isValidEmailAndUsername --> $isValidEmailAndUsername');
+
+                                        if (passwordState is SignUpPasswordsValid &&
+                                            isValidEmailAndUsername) {
+                                          BlocProvider.of<AuthCubit>(context).signUp(
+                                              username: _usernameController.text,
+                                              email: _emailController.text,
+                                              password: _passwordController.text,
+                                              phone: _phoneController.text,
+                                              confirmPassword: _confirmPasswordController.text);
+                                        } else {
+                                          CustomSnackBar.showSnackBar(
+                                              context: context,
+                                              textMsg: AppLocalizations.of(context)
+                                                  .translate('SignUp.fillCorrectInfo'));
+                                        }
+                                      },
+                                    );
+                                  }),
+                                  // CustomButton(
+                                  //   color: Theme.of(context).buttonColor,
+                                  //   label: AppLocalizations.of(context)
+                                  //       .translate('SignUp.continueWithGoogle'),
+                                  //   logoAsset: 'assets/images/google.png',
+                                  // ),
+                                  // CustomButton(
+                                  //   color: Theme.of(context).buttonColor,
+                                  //   label: AppLocalizations.of(context)
+                                  //       .translate('SignUp.continueWithFacebook'),
+                                  //   logoAsset: 'assets/images/facebook.png',
+                                  // ),
                                   space(height: 10),
                                   CustomAuthFooter(
                                     onTap: () => Navigator.of(context).pop(),
@@ -286,5 +330,10 @@ class _SignUpPageState extends State<SignUpPage> {
         ),
       ),
     );
+  }
+
+  bool areEmailAndUsernameValid(BuildContext context) {
+    final currentState = BlocProvider.of<EmailUsernameValidationBloc>(context).state;
+    return (currentState is! UsernameInvalid && currentState is! EmailInvalid);
   }
 }

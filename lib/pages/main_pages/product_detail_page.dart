@@ -70,17 +70,15 @@ class ProductDetailPage extends StatelessWidget {
                           onTap: () => Navigator.of(context).push(PageTransition(
                               child: VendorProductsPage(), type: PageTransitionType.fade)),
                           child: VendorTile()),
-                      Spacer(),
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 15.0),
-                        child: AutoSizeText(product.name ?? '',
-                            textScaleFactor: MediaQuery.of(context).textScaleFactor,
-                            style: Theme.of(context).textTheme.headline1.copyWith(
-                                  fontWeight: FontWeight.w200,
-                                )),
-                      ),
-                      Spacer(
-                        flex: 2,
+                      Expanded(
+                        child: Container(
+                          padding: const EdgeInsets.only(bottom: 30.0, right: 15),
+                          child: AutoSizeText(product.name ?? '',
+                              minFontSize: 15,
+                              style: Theme.of(context).textTheme.headline1.copyWith(
+                                    fontWeight: FontWeight.w200,
+                                  )),
+                        ),
                       ),
                     ],
                   ),
@@ -139,7 +137,7 @@ class ProductDetailPage extends StatelessWidget {
                   Expanded(
                     child: SingleChildScrollView(
                       child: AutoSizeText(
-                        dummyText,
+                        product.description,
                         style: Theme.of(context).textTheme.headline5.copyWith(
                               fontWeight: FontWeight.w200,
                             ),
@@ -153,8 +151,11 @@ class ProductDetailPage extends StatelessWidget {
                       horizontal: 50,
                     ),
                     child: CustomButton(
+                      content: Text(
+                        AppLocalizations.of(context).translate('ProductDetails.addToCart'),
+                        style: Theme.of(context).textTheme.button,
+                      ),
                       color: Theme.of(context).primaryColor,
-                      label: AppLocalizations.of(context).translate('ProductDetails.addToCart'),
                     ),
                   )
                 ],
@@ -173,19 +174,26 @@ class ProductDetailPage extends StatelessWidget {
                 width: width,
                 top: -50,
                 child: CarouselSlider.builder(
-                    itemCount: product.imagesUrl.length,
-                    itemBuilder: (context, i) => GestureDetector(
-                          onTap: () => open(context, i),
-                          child: product.imagesUrl[i] != null
-                              ? Image.network(
-                                  product.imagesUrl[i],
-                                  fit: BoxFit.fitHeight,
-                                )
-                              : Image.asset(
-                                  'assets/images/product.png',
-                                  fit: BoxFit.contain,
-                                ),
-                        ),
+                    itemCount: product.imagesUrl.isEmpty ? 1 : product.imagesUrl.length,
+                    itemBuilder: (context, i) {
+                      return GestureDetector(
+                        onTap: () => open(context, i),
+                        child: product.imagesUrl.isNotEmpty
+                            ? product.imagesUrl[i] != null
+                                ? Image.network(
+                                    product.imagesUrl[i],
+                                    fit: BoxFit.fitHeight,
+                                  )
+                                : Image.asset(
+                                    'assets/images/product.png',
+                                    fit: BoxFit.contain,
+                                  )
+                            : Image.asset(
+                                'assets/images/product.png',
+                                fit: BoxFit.contain,
+                              ),
+                      );
+                    },
                     options: CarouselOptions(
                         height: height / 2,
                         onPageChanged: (index, reason) =>

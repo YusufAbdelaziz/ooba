@@ -19,19 +19,19 @@ class AppLocalizations {
 
   Map<String, dynamic> _localizedValues;
 
-  Future<bool> load() async {
+  Future<bool> _load() async {
     String jsonString = await rootBundle.loadString('assets/langs/${locale.languageCode}.json');
     Map<String, dynamic> jsonMap = json.decode(jsonString);
-    _localizedValues = flattenTranslations(jsonMap);
+    _localizedValues = _flattenTranslations(jsonMap);
     return true;
   }
 
   /// Used to flatten the maps in json file and turns it to key/value pairs.
-  Map flattenTranslations(Map<String, dynamic> json, [String prefix = '']) {
+  Map _flattenTranslations(Map<String, dynamic> json, [String prefix = '']) {
     final Map<String, String> translations = {};
     json.forEach((String key, dynamic value) {
       if (value is Map) {
-        translations.addAll(flattenTranslations(value, '$prefix$key.'));
+        translations.addAll(_flattenTranslations(value, '$prefix$key.'));
       } else {
         translations['$prefix$key'] = value.toString();
       }
@@ -58,7 +58,7 @@ class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> 
   @override
   Future<AppLocalizations> load(Locale locale) async {
     AppLocalizations localizations = AppLocalizations(locale);
-    await localizations.load();
+    await localizations._load();
     return localizations;
   }
 

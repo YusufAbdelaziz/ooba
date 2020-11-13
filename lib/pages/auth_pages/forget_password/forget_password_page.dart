@@ -77,8 +77,11 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
                         child: CustomButton(
                           onTap: () => Navigator.of(context).push(PageTransition(
                               type: PageTransitionType.fade, child: EmailCheckPage())),
-                          label: AppLocalizations.of(context)
-                              .translate('ForgetPassword.resetPassword'),
+                          content: Text(
+                            AppLocalizations.of(context)
+                                .translate('ForgetPassword.resetPassword'),
+                            style: Theme.of(context).textTheme.button,
+                          ),
                           color: Theme.of(context).primaryColor,
                         ),
                       )
