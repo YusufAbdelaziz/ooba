@@ -8,8 +8,10 @@ class Product {
   final int stockQuantity;
   final String description;
   final String shortDescription;
+  bool isFavorite;
   Product(
       {@required this.name,
+      this.isFavorite = false,
       @required this.id,
       @required this.imagesUrl,
       @required this.price,
@@ -26,6 +28,7 @@ class Product {
     map['price'] = this.price;
     map['description'] = this.description;
     map['short_description'] = this.shortDescription;
+    map['is_favourite'] = this.isFavorite;
     return map;
   }
 
@@ -36,6 +39,7 @@ class Product {
         stockQuantity: json['stock_quantity'],
         name: json['name'],
         id: json['id'],
+        isFavorite: json['is_favourite'],
         imagesUrl: List<String>.from(json['gallery_images'].map((image) => image['path'])),
         price: json['price']);
   }

@@ -1,5 +1,6 @@
 {
   "close" : "Close",
+  "error" : "Something went wrong, please try again or check your internet connection.",
   "SignIn" : {
     "signIn" : "Sign In",
     "userNameOrEmail" : "Username or Email",

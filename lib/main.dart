@@ -12,10 +12,14 @@ import 'common/custom_theme_mode.dart';
 import 'common/translation_configuration/app_localizations.dart';
 import 'pages/auth_pages/sign_in/sign_in_page.dart';
 import 'pages/main_pages/main_products_page.dart';
+import 'repos/categories_repo/categories_repo.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Bloc.observer = MyBlocObserver();
+
+  /// Used to clear cached categories from shared preference.
+  CategoriesRepo.clearCategories();
   runApp(MultiBlocProvider(providers: [
     BlocProvider<LanguageBloc>(
       create: (context) => LanguageBloc()..add(LanguageLoadStarted()),
@@ -65,8 +69,7 @@ class MainApp extends StatelessWidget {
         if (state is AuthPages) {
           widget = SignInPage();
         } else if (state is MainPages) {
-          widget = BlocProvider<ProductsBloc>(
-              create: (_) => ProductsBloc()..add(ProductsFetched()), child: MainProductsPage());
+          widget = MainProductsPage();
         }
         return widget;
       },

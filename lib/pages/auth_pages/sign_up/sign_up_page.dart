@@ -15,7 +15,7 @@ import '../../../widgets/auth_pages/custom_auth_footer.dart';
 import '../../../widgets/auth_pages/custom_auth_header.dart';
 import '../../../widgets/common/custom_appbar.dart';
 import '../../../widgets/common/custom_text_field.dart';
-import '../../../widgets/main_product_pages/custom_snack_bar.dart';
+import '../../../utilities/custom_snack_bar.dart';
 import '../../../widgets/main_product_pages/custom_loading_indicator.dart';
 
 class SignUpPage extends StatefulWidget {

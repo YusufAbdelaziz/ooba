@@ -11,21 +11,24 @@ part 'products_state.dart';
 
 class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
   int _page = 0;
-  ProductsBloc() : super(LoadingProducts());
+  String _slug;
+  ProductsBloc({String slug})
+      : _slug = slug,
+        super(LoadingProducts());
 
   @override
   Stream<ProductsState> mapEventToState(ProductsEvent event) async* {
     var currentState = state;
     if (event is ProductsFetched && !_hasReachedMax(currentState)) {
-      print('i aaam fetching nigga');
+      print('i aaam fetching products');
       try {
         if (currentState is LoadingProducts) {
-          final products = await ProductsRepo.fetchProducts(page: _page);
+          final products = await ProductsRepo.fetchProducts(page: _page, slug: _slug);
           yield ProductsFetchSuccess(products: products, hasReachedMax: false);
           _page++;
           print('Page --> $_page');
         } else if (currentState is ProductsFetchSuccess) {
-          final products = await ProductsRepo.fetchProducts(page: _page);
+          final products = await ProductsRepo.fetchProducts(page: _page, slug: _slug);
           yield (products.isEmpty
               ? currentState.copyWith(hasReachedMax: true)
               : currentState.copyWith(
@@ -39,12 +42,11 @@ class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
         yield ProductsFetchFail(text: e.toString());
       }
     } else if (event is ProductsReloaded) {
-      yield(LoadingProducts());
+      yield (LoadingProducts());
       _page = 0;
       add(ProductsFetched());
     }
   }
-
 
   bool _hasReachedMax(ProductsState state) => state is ProductsFetchSuccess && state.hasReachedMax;
 

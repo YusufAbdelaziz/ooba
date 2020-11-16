@@ -28,7 +28,7 @@ class ProductsFetchSuccess extends ProductsState {
 
   @override
   String toString() {
-    return '{ProductsFetchSuccess : products length : ${products.length}';
+    return '{ProductsFetchSuccess : products length --> ${products.length}}';
   }
 
   @override

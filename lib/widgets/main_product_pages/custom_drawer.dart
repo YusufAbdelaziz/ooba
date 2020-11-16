@@ -1,5 +1,6 @@
 import 'package:Ooba/blocs/global_blocs/auth/auth_cubit.dart';
 import 'package:Ooba/blocs/global_blocs/main_cubit/main_cubit.dart';
+import 'package:Ooba/repos/user_repo/user_repo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:page_transition/page_transition.dart';
@@ -12,6 +13,7 @@ import 'custom_loading_indicator.dart';
 import 'drawer_item.dart';
 
 class CustomDrawer extends StatelessWidget {
+  final _user = UserRepo.getUser();
   @override
   Widget build(BuildContext context) {
     return BlocProvider<SideMenuCubit>(
@@ -57,18 +59,22 @@ class CustomDrawer extends StatelessWidget {
               ),
               space(height: 15),
               Text(
-                'Mike',
+                _user.name,
                 style: Theme.of(context).textTheme.headline3.copyWith(fontSize: 20),
               ),
-              Text('mil@gmail.com',
+              Text(_user.email,
                   style: Theme.of(context)
                       .textTheme
                       .headline5
                       .copyWith(color: Colors.grey.withOpacity(0.7))),
+              space(height: 10),
               BlocBuilder<SideMenuCubit, SideMenuState>(
                 builder: (context, state) {
                   if (state is LoadingCategories) {
-                    return CustomLoadingIndicator();
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      child: CustomLoadingIndicator(),
+                    );
                   } else if (state is CategoriesFetch) {
                     return Expanded(
                         child: Scrollbar(
@@ -81,7 +87,7 @@ class CustomDrawer extends StatelessWidget {
                           onTap: () => Navigator.of(context).push(PageTransition(
                               type: PageTransitionType.fade,
                               child: CategoryPage(
-                                categoryName: state.categories[i].name,
+                                category: state.categories[i],
                               ))),
                         ),
                       ),

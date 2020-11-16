@@ -1,14 +1,9 @@
-import 'package:Ooba/widgets/main_product_pages/custom_snack_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:page_transition/page_transition.dart';
 
-import '../../blocs/main_pages_bloc/products_bloc/products_bloc.dart';
-import '../../widgets/common/product_item.dart';
+import '../../widgets/common/products_grid.dart';
 import '../../widgets/main_product_pages/custom_drawer.dart';
-import '../../widgets/main_product_pages/custom_loading_indicator.dart';
 import '../../widgets/main_product_pages/main_products_app_bar.dart';
-import '../../common/translation_configuration/app_localizations.dart';
 import 'order_details_page.dart';
 
 class MainProductsPage extends StatefulWidget {
@@ -18,7 +13,6 @@ class MainProductsPage extends StatefulWidget {
 
 class _MainProductsPageState extends State<MainProductsPage> {
   TextEditingController _searchController;
-  final _scrollController = ScrollController();
   @override
   void initState() {
     super.initState();
@@ -28,7 +22,6 @@ class _MainProductsPageState extends State<MainProductsPage> {
   @override
   void dispose() {
     _searchController.dispose();
-    _scrollController.removeListener(() => _onScroll(context));
     super.dispose();
   }
 
@@ -48,66 +41,10 @@ class _MainProductsPageState extends State<MainProductsPage> {
               BorderRadius.only(topRight: Radius.circular(15), topLeft: Radius.circular(15)),
           child: Container(
             color: Theme.of(context).backgroundColor,
-            child: BlocConsumer<ProductsBloc, ProductsState>(
-              listener: (context, state) {
-                if (state is ProductsFetchFail) {
-                  CustomSnackBar.showSnackBar(context: context, textMsg: state.text);
-                }
-              },
-              builder: (context, state) {
-                if (state is ProductsFetchSuccess) {
-                  return RefreshIndicator(
-                      onRefresh: () async =>
-                          BlocProvider.of<ProductsBloc>(context).add(ProductsReloaded()),
-                      color: Theme.of(context).primaryColor,
-                      child: GridView.builder(
-                        controller: _scrollController..addListener(() => _onScroll(context)),
-                        physics: BouncingScrollPhysics(),
-                        shrinkWrap: true,
-                        itemCount:
-                            state.hasReachedMax ? state.products.length : state.products.length + 2,
-                        padding: EdgeInsets.all(15),
-                        itemBuilder: (context, index) {
-                          return index >= state.products.length
-                              ? CustomLoadingIndicator()
-                              : ProductItem(
-                                  product: state.products[index],
-                                );
-                        },
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisSpacing: 10,
-                          mainAxisSpacing: 20,
-                          crossAxisCount: 2,
-                          childAspectRatio: 100 / 145,
-                        ),
-                      ));
-                } else if (state is LoadingProducts) {
-                  return CustomLoadingIndicator();
-                } else if (state is ProductsFetchFail) {
-                  return RefreshIndicator(
-                      onRefresh: () async =>
-                          BlocProvider.of<ProductsBloc>(context).add(ProductsReloaded()),
-                      color: Theme.of(context).primaryColor,
-                      child: ListView());
-                } else {
-                  return Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height,
-                  );
-                }
-              },
-            ),
+            child: ProductsGrid(),
           ),
         ),
       ),
     );
-  }
-
-  void _onScroll(BuildContext context) {
-    final maxScroll = _scrollController.position.maxScrollExtent;
-    final currentScroll = _scrollController.position.pixels;
-    if (maxScroll - currentScroll <= 1000 && maxScroll - currentScroll >= 950) {
-      BlocProvider.of<ProductsBloc>(context).add(ProductsFetched());
-    }
   }
 }

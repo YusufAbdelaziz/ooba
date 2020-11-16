@@ -9,7 +9,7 @@ class VendorProductsPage extends StatelessWidget {
       appBar: VendorPageAppBar(),
       body: Padding(
         padding: const EdgeInsets.only(top: 10),
-        child: ProductsGrid(products: [],),
+        child: ProductsGrid(),
       ),
     );
   }

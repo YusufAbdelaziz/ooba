@@ -11,3 +11,4 @@ class ProductsReloaded extends ProductsEvent {
   @override
   List<Object> get props => [];
 }
+

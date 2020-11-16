@@ -1,6 +1,9 @@
 import 'dart:math';
 
+import 'package:Ooba/blocs/main_pages_bloc/favorite_switcher_cubit/favorite_switcher_cubit.dart';
 import 'package:Ooba/models/product.dart';
+import 'package:Ooba/utilities/custom_snack_bar.dart';
+import 'package:Ooba/widgets/main_product_pages/custom_snack_bar.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
@@ -203,10 +206,41 @@ class ProductDetailPage extends StatelessWidget {
               Positioned(
                   left: 22,
                   top: 22,
-                  child: FavouriteButton(
-                    radius: 20,
-                    size: 16,
-                  )),
+                  child: BlocConsumer<FavoriteSwitcherCubit, FavoriteSwitcherState>(
+                      listener: (context, state) {
+                    if (state is FavoriteSwitchFail) {
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              content: Text(AppLocalizations.of(context).translate('error')),
+                              actions: [
+                                FlatButton(
+                                  child: Text(
+                                    AppLocalizations.of(context).translate('close'),
+                                    style: TextStyle(color: Theme.of(context).primaryColor),
+                                  ),
+                                  onPressed: () => Navigator.of(context).pop(),
+                                )
+                              ],
+                            );
+                          });
+                    }
+                  }, builder: (context, state) {
+                    bool isFavorite;
+                    if (state is FavoriteSwitchSuccess) {
+                      isFavorite = state.switchStatus;
+                    } else if (state is FavoriteSwitcherInitial) {
+                      isFavorite = product.isFavorite;
+                    }
+                    return FavouriteButton(
+                      onClick: () => BlocProvider.of<FavoriteSwitcherCubit>(context)
+                          .switchFavorite(product: product),
+                      isFavorite: isFavorite,
+                      size: 16,
+                      radius: 15,
+                    );
+                  })),
               BlocBuilder<GallerySwitcherCubit, int>(
                 builder: (context, state) => Positioned(
                   height: 30,

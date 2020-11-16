@@ -1,4 +1,4 @@
-import 'package:Ooba/widgets/main_product_pages/custom_snack_bar.dart';
+import 'package:Ooba/utilities/custom_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:page_transition/page_transition.dart';
