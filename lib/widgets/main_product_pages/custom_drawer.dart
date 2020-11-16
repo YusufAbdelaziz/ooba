@@ -1,5 +1,6 @@
 import 'package:Ooba/blocs/global_blocs/auth/auth_cubit.dart';
 import 'package:Ooba/blocs/global_blocs/main_cubit/main_cubit.dart';
+import 'package:Ooba/repos/user_repo/user_repo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:page_transition/page_transition.dart';
@@ -43,28 +44,29 @@ class CustomDrawer extends StatelessWidget {
                         child: Image.asset('assets/images/ooba_icon.png'),
                       ),
                     ),
-                    Positioned(
-                        top: 70,
-                        right: 55,
-                        child: CircleAvatar(
-                          radius: 17,
-                          backgroundColor: Theme.of(context).primaryColor,
-                          child: Image.asset('assets/images/camera.png'),
-                        ))
+                    // Positioned(
+                    //     top: 70,
+                    //     right: 55,
+                    //     child: CircleAvatar(
+                    //       radius: 17,
+                    //       backgroundColor: Theme.of(context).primaryColor,
+                    //       child: Image.asset('assets/images/camera.png'),
+                    //     ))
                   ],
                   alignment: Alignment.center,
                 ),
               ),
               space(height: 15),
               Text(
-                'Mike',
+                UserRepo.getUser().name,
                 style: Theme.of(context).textTheme.headline3.copyWith(fontSize: 20),
               ),
-              Text('mil@gmail.com',
+              Text(UserRepo.getUser().email,
                   style: Theme.of(context)
                       .textTheme
                       .headline5
                       .copyWith(color: Colors.grey.withOpacity(0.7))),
+              space(height: 20),
               BlocBuilder<SideMenuCubit, SideMenuState>(
                 builder: (context, state) {
                   if (state is LoadingCategories) {

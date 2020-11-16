@@ -29,7 +29,7 @@ class CartRepo {
 
   static Future<List<CartItem>> fetchCart() async {
     final response = await http.post(_url ,body: {
-      'token':"e5328d08aa47c8a3ae3ed3c1c16185b4fac84ed2a12e9e2e8c8c6589afcf872c",
+      'token': UserRepo.getUser().token,
       'action':'get_cart',
     });
     var body = json.decode(response.body);
@@ -38,5 +38,21 @@ class CartRepo {
       return List<CartItem>.from(json.decode(response.body)['data'].map((item) => CartItem.fromJson(item)));
     else
       throw Exception("Try again later");
+  }
+
+
+  static Future<bool> checkout(int addressId) async {
+    final response = await http.post(_url ,body: {
+      'token':UserRepo.getUser().token,
+      'action':'REST_API_WooCommerce_checkout',
+      'data_hash':'b5c1d5ca8bae6d4896cf1807cdf763f0',
+      "address_id":addressId.toString()
+    });
+    var body = json.decode(response.body);
+    print(response.body);
+    if (response.statusCode == 200 && body["status"] == "success")
+      return true;
+    else
+      return false;
   }
 }
