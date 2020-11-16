@@ -1,6 +1,10 @@
 import 'dart:math';
 
+import 'package:Ooba/blocs/cart_bloc/cart_bloc.dart';
+import 'package:Ooba/blocs/counter_bloc/counter_bloc.dart';
 import 'package:Ooba/models/product.dart';
+import 'package:Ooba/repos/user_repo/user_repo.dart';
+import 'package:Ooba/utilities/error_bar.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
@@ -21,20 +25,24 @@ import '../../widgets/main_product_pages/gallery_photo_view_wrapper.dart';
 
 class ProductDetailPage extends StatelessWidget {
   final Product product;
-  final dummyText =
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean in elit eget quam interdum ultrices. Cras eget enim in lacus lacinia iaculis sit amet at eros. Sed nec accumsan orci. Quisque interdum pharetra finibus. Sed quis lorem sit amet justo sollicitudin varius id in metus. Proin ultricies lacus massa, et porttitor augue tempor luctus. Cras tortor tortor, mattis ac laoreet ut, tempus sit amet nibh.Aliquam leo enim, mollis et facilisis et, efficitur eget augue. Nam vel ligula sed nulla faucibus tristique eget ac ante. Ut dapibus dui eget ex accumsan bibendum. Quisque tincidunt tellus efficitur felis lacinia, sed ultrices dui pharetra. Aenean consectetur non sapien eget tincidunt. Fusce interdum varius diam vel ornare. Phasellus interdum vulputate libero et pharetra. Nulla vel lorem malesuada, auctor justo ut, iaculis ipsum. Donec pharetra vitae lectus sit amet gravida. Fusce congue, augue sed congue venenatis, lorem neque cursus dolor, quis porta enim ante sed orci. Quisque accumsan velit eu velit varius euismod. Vestibulum elementum malesuada dolor ac convallis. Proin quis vulputate leo.Phasellus lorem quam, sodales non urna et, feugiat suscipit justo. Donec vel blandit erat. Mauris aliquet diam ac scelerisque rutrum. Suspendisse dictum nisl metus, sit amet accumsan nulla blandit eu. Ut et lectus at turpis tempus dignissim sit amet vel leo. Proin quis fermentum est, id imperdiet ante. Donec augue purus, pretium varius elementum et, tincidunt congue neque.';
 
   const ProductDetailPage({Key key, @required this.product}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
-
+    print(UserRepo.getUser().token);
     return MultiBlocProvider(
       providers: [
         BlocProvider<GallerySwitcherCubit>(create: (_) => GallerySwitcherCubit()),
-        BlocProvider<StateHandlerCubit>(
-            create: (_) => StateHandlerCubit()..valueSwitched(value: true))
+        BlocProvider<StateHandlerCubit>(create: (_) => StateHandlerCubit()..valueSwitched(value: true)),
+        BlocProvider<CounterBloc>(create: (context) {
+          return CounterBloc(1);
+        }),
+        BlocProvider<CartBloc>(create: (context) {
+          return CartBloc();
+        }),
       ],
       child: Builder(
         builder: (context) => Scaffold(
@@ -67,17 +75,21 @@ class ProductDetailPage extends StatelessWidget {
                   Row(
                     children: [
                       InkWell(
-                          onTap: () => Navigator.of(context).push(PageTransition(
-                              child: VendorProductsPage(), type: PageTransitionType.fade)),
+                          onTap: () => Navigator.of(context)
+                              .push(PageTransition(child: VendorProductsPage(), type: PageTransitionType.fade)),
                           child: VendorTile()),
                       Expanded(
-                        child: Container(
-                          padding: const EdgeInsets.only(bottom: 30.0, right: 15),
-                          child: AutoSizeText(product.name ?? '',
-                              minFontSize: 15,
+                        child: Center(
+                          child: Container(
+                            padding: const EdgeInsets.only(bottom: 30.0, right: 15),
+                            child: AutoSizeText(
+                              product.name ?? '',
+                              minFontSize: 16,
                               style: Theme.of(context).textTheme.headline1.copyWith(
-                                    fontWeight: FontWeight.w200,
-                                  )),
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                            ),
+                          ),
                         ),
                       ),
                     ],
@@ -87,7 +99,7 @@ class ProductDetailPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       AutoSizeText(
-                        product.price + 'KD',
+                        product.price + ' KD ',
                         style: Theme.of(context)
                             .textTheme
                             .headline1
@@ -96,8 +108,7 @@ class ProductDetailPage extends StatelessWidget {
                       Container(
                         height: 40,
                         decoration: BoxDecoration(
-                            color: Theme.of(context).primaryColor,
-                            borderRadius: BorderRadius.all(Radius.circular(10))),
+                            color: Theme.of(context).primaryColor, borderRadius: BorderRadius.all(Radius.circular(10))),
                         width: 120,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -107,20 +118,22 @@ class ProductDetailPage extends StatelessWidget {
                                 Icons.add,
                                 color: Colors.white,
                               ),
-                              onPressed: () => print('PLUS ULTRAAA'),
+                              onPressed: () => BlocProvider.of<CounterBloc>(context).add(CounterEvent.increment),
                             ),
                             Spacer(),
-                            Text(
-                              '1',
-                              style: Theme.of(context).textTheme.bodyText1,
-                            ),
+                            BlocBuilder<CounterBloc, int>(builder: (context, count) {
+                              return Text(
+                                '$count',
+                                style: Theme.of(context).textTheme.bodyText1,
+                              );
+                            }),
                             Spacer(),
                             IconButton(
                               icon: Icon(
                                 Icons.remove,
                                 color: Colors.white,
                               ),
-                              onPressed: () => print('MINUS ULTRAAA'),
+                              onPressed: () => BlocProvider.of<CounterBloc>(context).add(CounterEvent.decrement),
                             ),
                           ],
                         ),
@@ -131,7 +144,7 @@ class ProductDetailPage extends StatelessWidget {
                   AutoSizeText(AppLocalizations.of(context).translate('ProductDetails.description'),
                       textScaleFactor: MediaQuery.of(context).textScaleFactor,
                       style: Theme.of(context).textTheme.headline1.copyWith(
-                            fontWeight: FontWeight.w200,
+                            fontWeight: FontWeight.w400,
                           )),
                   space(height: 10),
                   Expanded(
@@ -150,13 +163,43 @@ class ProductDetailPage extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(
                       horizontal: 50,
                     ),
-                    child: CustomButton(
-                      content: Text(
-                        AppLocalizations.of(context).translate('ProductDetails.addToCart'),
-                        style: Theme.of(context).textTheme.button,
-                      ),
-                      color: Theme.of(context).primaryColor,
-                    ),
+                    child: BlocBuilder<CartBloc, CartState>(builder: (context, state) {
+                      if(state is LoadingCart)
+                        return Container(
+                          margin: EdgeInsets.only(bottom: 10),
+                          height: 44,
+                          color: Theme
+                              .of(context)
+                              .primaryColor,
+                          child: Row(
+                            children: [
+                              Spacer(),
+                              CircularProgressIndicator(
+                                backgroundColor: Theme.of(context).primaryColor,
+                                valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                              ),
+                              Spacer(),
+                            ],
+                          ),
+                        );
+                      return BlocBuilder<CounterBloc, int>(builder: (context, count) {
+                        return CustomButton(
+                          content: Text(
+                            AppLocalizations.of(context).translate('ProductDetails.addToCart'),
+                            style: Theme
+                                .of(context)
+                                .textTheme
+                                .button,
+                          ),
+                          onTap: () {
+                            BlocProvider.of<CartBloc>(context).add(AddToCart(id: product.id, quantity: count));
+                          },
+                          color: Theme
+                              .of(context)
+                              .primaryColor,
+                        );
+                      });
+                    }),
                   )
                 ],
               ),
@@ -167,68 +210,83 @@ class ProductDetailPage extends StatelessWidget {
             title: AppLocalizations.of(context).translate('ProductDetails.productDetails'),
             backAction: () => Navigator.of(context).pop(),
           ),
-          body: Stack(
-            alignment: Alignment.topCenter,
-            children: [
-              Positioned(
-                width: width,
-                top: -50,
-                child: CarouselSlider.builder(
-                    itemCount: product.imagesUrl.isEmpty ? 1 : product.imagesUrl.length,
-                    itemBuilder: (context, i) {
-                      return GestureDetector(
-                        onTap: () => open(context, i),
-                        child: product.imagesUrl.isNotEmpty
-                            ? product.imagesUrl[i] != null
-                                ? Image.network(
-                                    product.imagesUrl[i],
-                                    fit: BoxFit.fitHeight,
-                                  )
-                                : Image.asset(
-                                    'assets/images/product.png',
-                                    fit: BoxFit.contain,
-                                  )
-                            : Image.asset(
-                                'assets/images/product.png',
-                                fit: BoxFit.contain,
-                              ),
-                      );
-                    },
-                    options: CarouselOptions(
-                        height: height / 2,
-                        onPageChanged: (index, reason) =>
-                            BlocProvider.of<GallerySwitcherCubit>(context)
-                                .thumbnailBorderSwitched(index: index))),
-              ),
-              Positioned(
-                  left: 22,
-                  top: 22,
-                  child: FavouriteButton(
-                    radius: 20,
-                    size: 16,
-                  )),
-              BlocBuilder<GallerySwitcherCubit, int>(
-                builder: (context, state) => Positioned(
-                  height: 30,
-                  top: height / 3.2,
-                  child: ListView.separated(
-                    shrinkWrap: true,
-                    separatorBuilder: (context, i) => space(width: 5),
-                    scrollDirection: Axis.horizontal,
-                    itemCount: product.imagesUrl.length,
-                    itemBuilder: (context, i) => Container(
-                        decoration: BoxDecoration(
-                          border: Border.all(color: state == i ? Colors.white : Colors.transparent),
-                        ),
-                        child: product.imagesUrl[i] != null
-                            ? Image.network(product.imagesUrl[i])
-                            : Image.asset(
-                                'assets/images/product.png',
-                              )),
+          body: BlocListener<CartBloc, CartState>(
+            listener: (context, state) async {
+              if (state is CartFail) {
+                errorSnackBar(state.text, context);
+              }
+              else if (state is ProductAddedToCart) {
+                Navigator.of(context).pop();
+                Scaffold.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text("This product added successfully"),
+                    backgroundColor: Colors.lightGreen,
+                  ),
+                );
+              }
+            },
+            child: Stack(
+              alignment: Alignment.topCenter,
+              children: [
+                Positioned(
+                  width: width,
+                  top: -50,
+                  child: CarouselSlider.builder(
+                      itemCount: product.imagesUrl.isEmpty ? 1 : product.imagesUrl.length,
+                      itemBuilder: (context, i) {
+                        return GestureDetector(
+                          onTap: () => open(context, i),
+                          child: product.imagesUrl.isNotEmpty
+                              ? product.imagesUrl[i] != null
+                                  ? Image.network(
+                                      product.imagesUrl[i],
+                                      fit: BoxFit.fitHeight,
+                                    )
+                                  : Image.asset(
+                                      'assets/images/product.png',
+                                      fit: BoxFit.contain,
+                                    )
+                              : Image.asset(
+                                  'assets/images/product.png',
+                                  fit: BoxFit.contain,
+                                ),
+                        );
+                      },
+                      options: CarouselOptions(
+                          height: height / 2,
+                          onPageChanged: (index, reason) =>
+                              BlocProvider.of<GallerySwitcherCubit>(context).thumbnailBorderSwitched(index: index))),
+                ),
+                Positioned(
+                    left: 22,
+                    top: 22,
+                    child: FavouriteButton(
+                      radius: 20,
+                      size: 16,
+                    )),
+                BlocBuilder<GallerySwitcherCubit, int>(
+                  builder: (context, state) => Positioned(
+                    height: 30,
+                    top: height / 3.2,
+                    child: ListView.separated(
+                      shrinkWrap: true,
+                      separatorBuilder: (context, i) => space(width: 5),
+                      scrollDirection: Axis.horizontal,
+                      itemCount: product.imagesUrl.length,
+                      itemBuilder: (context, i) => Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(color: state == i ? Colors.white : Colors.transparent),
+                          ),
+                          child: product.imagesUrl[i] != null
+                              ? Image.network(product.imagesUrl[i])
+                              : Image.asset(
+                                  'assets/images/product.png',
+                                )),
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
