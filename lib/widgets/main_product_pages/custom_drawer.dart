@@ -45,14 +45,14 @@ class CustomDrawer extends StatelessWidget {
                         child: Image.asset('assets/images/ooba_icon.png'),
                       ),
                     ),
-                    Positioned(
-                        top: 70,
-                        right: 55,
-                        child: CircleAvatar(
-                          radius: 17,
-                          backgroundColor: Theme.of(context).primaryColor,
-                          child: Image.asset('assets/images/camera.png'),
-                        ))
+                    // Positioned(
+                    //     top: 70,
+                    //     right: 55,
+                    //     child: CircleAvatar(
+                    //       radius: 17,
+                    //       backgroundColor: Theme.of(context).primaryColor,
+                    //       child: Image.asset('assets/images/camera.png'),
+                    //     ))
                   ],
                   alignment: Alignment.center,
                 ),
@@ -67,7 +67,7 @@ class CustomDrawer extends StatelessWidget {
                       .textTheme
                       .headline5
                       .copyWith(color: Colors.grey.withOpacity(0.7))),
-              space(height: 10),
+              space(height: 20),
               BlocBuilder<SideMenuCubit, SideMenuState>(
                 builder: (context, state) {
                   if (state is LoadingCategories) {
