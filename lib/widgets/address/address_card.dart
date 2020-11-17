@@ -1,10 +1,12 @@
-
+import 'package:Ooba/blocs/address_cubit/address_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../common/translation_configuration/app_localizations.dart';
 import '../../models/address.dart';
+
 class AddressCard extends StatelessWidget implements PreferredSizeWidget {
-  final AddressModel address;
+  final Address address;
 
   const AddressCard({@required this.address});
 
@@ -19,19 +21,28 @@ class AddressCard extends StatelessWidget implements PreferredSizeWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                address.name,
-                style: Theme.of(context).textTheme.headline5.copyWith(fontSize: 14, color: Color(0xff676870)),
+                address.contactName,
+                style: Theme.of(context)
+                    .textTheme
+                    .headline5
+                    .copyWith(fontSize: 14, color: Color(0xff676870)),
               ),
-              FlatButton(
-                onPressed: () {},
-                child: Text(
-                  AppLocalizations.of(context).translate('Address.change'),
-                  style: Theme.of(context)
-                      .textTheme
-                      .headline2
-                      .copyWith(fontSize: 14, color: Theme.of(context).primaryColor),
-                ),
-              )
+              address.isDefault
+                  ? Icon(
+                      Icons.check,
+                      color: Theme.of(context).primaryColor,
+                    )
+                  : FlatButton(
+                      onPressed: () => BlocProvider.of<AddressCubit>(context)
+                          .setDefaultAddress(address: address),
+                      child: Text(
+                        AppLocalizations.of(context).translate('Address.setDefault'),
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline2
+                            .copyWith(fontSize: 14, color: Theme.of(context).primaryColor),
+                      ),
+                    )
             ],
           ),
           Text(

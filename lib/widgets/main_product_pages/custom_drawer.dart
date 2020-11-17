@@ -1,5 +1,7 @@
+import 'package:Ooba/blocs/address_cubit/address_cubit.dart';
 import 'package:Ooba/blocs/global_blocs/auth/auth_cubit.dart';
 import 'package:Ooba/blocs/global_blocs/main_cubit/main_cubit.dart';
+import 'package:Ooba/pages/main_pages/settings_page.dart';
 import 'package:Ooba/repos/user_repo/user_repo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -81,15 +83,24 @@ class CustomDrawer extends StatelessWidget {
                       child: ListView.builder(
                         physics: BouncingScrollPhysics(),
                         padding: EdgeInsets.symmetric(horizontal: 15),
-                        itemCount: state.categories.length,
-                        itemBuilder: (context, i) => DrawerItem(
-                          name: state.categories[i].name,
-                          onTap: () => Navigator.of(context).push(PageTransition(
-                              type: PageTransitionType.fade,
-                              child: CategoryPage(
-                                category: state.categories[i],
-                              ))),
-                        ),
+                        itemCount: state.categories.length + 1,
+                        itemBuilder: (context, i) => i == state.categories.length
+                            ? DrawerItem(
+                                name: AppLocalizations.of(context).translate('Drawer.settings'),
+                                onTap: () => Navigator.of(context).push(PageTransition(
+                                    type: PageTransitionType.fade,
+                                    child: BlocProvider.value(
+                                        value: BlocProvider.of<AddressCubit>(context),
+                                        child: SettingsPage()))),
+                              )
+                            : DrawerItem(
+                                name: state.categories[i].name,
+                                onTap: () => Navigator.of(context).push(PageTransition(
+                                    type: PageTransitionType.fade,
+                                    child: CategoryPage(
+                                      category: state.categories[i],
+                                    ))),
+                              ),
                       ),
                     ));
                   } else {

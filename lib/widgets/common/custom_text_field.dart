@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+typedef CustomFunction = void Function(String val);
+
 class CustomTextField extends StatelessWidget {
   final TextEditingController controller;
   final FocusNode focusNode;
@@ -8,8 +10,8 @@ class CustomTextField extends StatelessWidget {
   final TextInputType inputType;
   final bool obscureText;
   final bool isEnabled;
-  final void Function(String val) onSubmitted;
-  final void Function(String val) onChanged;
+  final CustomFunction onSubmitted;
+  final CustomFunction onChanged;
   final Widget suffixIcon;
 
   const CustomTextField(

@@ -10,7 +10,7 @@ part 'products_event.dart';
 part 'products_state.dart';
 
 class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
-  int _page = 0;
+  int _page = 1;
   String _slug;
   ProductsBloc({String slug})
       : _slug = slug,

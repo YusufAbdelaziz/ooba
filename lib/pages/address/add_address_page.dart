@@ -1,5 +1,10 @@
+import 'package:Ooba/blocs/address_cubit/address_cubit.dart';
+import 'package:Ooba/models/address.dart';
+import 'package:Ooba/utilities/custom_snack_bar.dart';
+import 'package:Ooba/widgets/main_product_pages/custom_loading_indicator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../common/translation_configuration/app_localizations.dart';
 import '../../utilities/space.dart';
@@ -13,7 +18,7 @@ class AddAddressPage extends StatefulWidget {
 }
 
 class _AddAddressPageState extends State<AddAddressPage> {
-  TextEditingController _nameController;
+  TextEditingController _contactNameController;
   TextEditingController _emailController;
   TextEditingController _phoneController;
   TextEditingController _addressLine1Controller;
@@ -21,7 +26,7 @@ class _AddAddressPageState extends State<AddAddressPage> {
   TextEditingController _zipCodeController;
   TextEditingController _countryController;
   TextEditingController _cityController;
-  FocusNode _nameFocusNode;
+  FocusNode _contactNameFocusNode;
   FocusNode _emailFocusNode;
   FocusNode _phoneFocusNode;
   FocusNode _addressLine1FocusNode;
@@ -35,7 +40,7 @@ class _AddAddressPageState extends State<AddAddressPage> {
   @override
   void initState() {
     super.initState();
-    _nameController = TextEditingController();
+    _contactNameController = TextEditingController();
     _emailController = TextEditingController();
     _phoneController = TextEditingController();
     _addressLine1Controller = TextEditingController();
@@ -43,7 +48,7 @@ class _AddAddressPageState extends State<AddAddressPage> {
     _zipCodeController = TextEditingController();
     _countryController = TextEditingController();
     _cityController = TextEditingController();
-    _nameFocusNode = FocusNode();
+    _contactNameFocusNode = FocusNode();
     _emailFocusNode = FocusNode();
     _phoneFocusNode = FocusNode();
     _addressLine1FocusNode = FocusNode();
@@ -55,7 +60,7 @@ class _AddAddressPageState extends State<AddAddressPage> {
 
   @override
   void dispose() {
-    _nameController.dispose();
+    _contactNameController.dispose();
     _emailController.dispose();
     _phoneController.dispose();
     _addressLine1Controller.dispose();
@@ -63,7 +68,7 @@ class _AddAddressPageState extends State<AddAddressPage> {
     _zipCodeController.dispose();
     _countryController.dispose();
     _cityController.dispose();
-    _nameFocusNode.dispose();
+    _contactNameFocusNode.dispose();
     _emailFocusNode.dispose();
     _phoneFocusNode.dispose();
     _addressLine1FocusNode.dispose();
@@ -94,8 +99,8 @@ class _AddAddressPageState extends State<AddAddressPage> {
               ),
               space(height: 20),
               CustomTextField(
-                  controller: _nameController,
-                  focusNode: _nameFocusNode,
+                  controller: _contactNameController,
+                  focusNode: _contactNameFocusNode,
                   onSubmitted: (_) => FocusScope.of(context).autofocus(_emailFocusNode),
                   labelText: AppLocalizations.of(context).translate('Address.addressName'),
                   onChanged: (usernameEmail) {}),
@@ -131,8 +136,6 @@ class _AddAddressPageState extends State<AddAddressPage> {
               CustomTextField(
                   controller: _countryController,
                   focusNode: _countryFocusNode,
-                  isEnabled: false,
-                  suffixIcon: Icon(Icons.arrow_forward_ios),
                   onSubmitted: (_) => FocusScope.of(context).autofocus(_cityFocusNode),
                   labelText: AppLocalizations.of(context).translate('Address.country'),
                   onChanged: (usernameEmail) {}),
@@ -140,8 +143,6 @@ class _AddAddressPageState extends State<AddAddressPage> {
               CustomTextField(
                   controller: _cityController,
                   focusNode: _cityFocusNode,
-                  isEnabled: false,
-                  suffixIcon: Icon(Icons.arrow_forward_ios),
                   onSubmitted: (_) => FocusScope.of(context).autofocus(_zipCodeFocusNode),
                   labelText: AppLocalizations.of(context).translate('Address.city'),
                   onChanged: (usernameEmail) {}),
@@ -153,37 +154,65 @@ class _AddAddressPageState extends State<AddAddressPage> {
                   labelText: AppLocalizations.of(context).translate('Address.zipCode'),
                   onChanged: (usernameEmail) {}),
               space(height: 20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    AppLocalizations.of(context).translate('Address.setDefault'),
-                    style: Theme.of(context).textTheme.headline2.copyWith(fontSize: 16),
-                  ),
-                  CupertinoSwitch(
-                      activeColor: Theme.of(context).primaryColor,
-                      value: isDefault,
-                      onChanged: (bool value) {
-                        setState(() {
-                          isDefault = value;
-                        });
-                      })
-                ],
-              ),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //   children: [
+              //     Text(
+              //       AppLocalizations.of(context).translate('Address.setDefault'),
+              //       style: Theme.of(context).textTheme.headline2.copyWith(fontSize: 16),
+              //     ),
+              //     CupertinoSwitch(
+              //         activeColor: Theme.of(context).primaryColor,
+              //         value: isDefault,
+              //         onChanged: (bool value) {
+              //           setState(() {
+              //             isDefault = value;
+              //           });
+              //         })
+              //   ],
+              // ),
               space(height: 20),
-              Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 30),
-                  child: CustomButton(
-                    color: Theme.of(context).primaryColor,
-                    onTap: () {},
-                    content: Text(
-                      AppLocalizations.of(context).translate('Address.save'),
-                      style: Theme.of(context).textTheme.button,
-                    ),
-                  )),
+              BlocConsumer<AddressCubit, AddressState>(
+                listener: (context, state) {
+                  if (state is AddAddressFail) {
+                    CustomSnackBar.showSnackBar(context: context, textMsg: state.errorMsg);
+                  } else if (state is AddAddressSuccess) {
+                    Navigator.of(context).pop();
+                  }
+                },
+                builder: (context, state) => Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 30),
+                    child: CustomButton(
+                      color: Theme.of(context).primaryColor,
+                      onTap: () => BlocProvider.of<AddressCubit>(context)
+                          .addAddress(address: _collectAddressInfo()),
+                      content: state is! LoadingAddAddress
+                          ? Text(
+                              AppLocalizations.of(context).translate('Address.save'),
+                              style: Theme.of(context).textTheme.button,
+                            )
+                          : CustomLoadingIndicator(
+                              color: Colors.white,
+                              verticalPadding: 5,
+                            ),
+                    )),
+              ),
               space(height: 10),
             ],
           ),
         ));
+  }
+
+  Address _collectAddressInfo() {
+    return Address(
+        phone: _phoneController.text,
+        email: _emailController.text,
+        addressLine1: _addressLine1Controller.text,
+        addressLine2: _addressLine2Controller.text,
+        city: _cityController.text,
+        country: _countryController.text,
+        contactName: _contactNameController.text,
+        zipCode: _zipCodeController.text,
+        isDefault: isDefault);
   }
 }

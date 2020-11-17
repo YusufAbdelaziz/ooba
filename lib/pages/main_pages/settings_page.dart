@@ -1,12 +1,17 @@
-import 'package:Ooba/pages/address/my_address_page.dart';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:page_transition/page_transition.dart';
 
 import '../../common/translation_configuration/app_localizations.dart';
 import '../../widgets/common/custom_appbar.dart';
 import '../../widgets/main_product_pages/settings_item.dart';
-
+import '../../pages/address/my_address_page.dart';
+import '../../blocs/address_cubit/address_cubit.dart';
+import '../../repos/user_repo/user_repo.dart';
 class SettingsPage extends StatelessWidget {
+  final _user = UserRepo.getUser();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,7 +28,7 @@ class SettingsPage extends StatelessWidget {
               SettingsItem(
                   header: AppLocalizations.of(context).translate('Settings.myProfile'),
                   action: null,
-                  title: 'Ahmed@gmail.com'),
+                  title: _user.email),
               SettingsItem(
                   header: AppLocalizations.of(context).translate('Settings.currency'),
                   action: null,
@@ -34,11 +39,18 @@ class SettingsPage extends StatelessWidget {
                   title: AppLocalizations.of(context).locale.languageCode == 'ar'
                       ? 'العربية'
                       : "English"),
-              SettingsItem(
-                  header: AppLocalizations.of(context).translate('Settings.address'),
-                  action: () => Navigator.of(context)
-                      .push(PageTransition(type: PageTransitionType.fade, child: MyAddressPage())),
-                  title: 'London, UK')
+              BlocBuilder<AddressCubit, AddressState>(
+                builder: (context, state){
+                  print('default address at settings page --> ${UserRepo.getUser().defaultAddress}');
+                  return SettingsItem(
+                      header: AppLocalizations.of(context).translate('Settings.address'),
+                      action: () => Navigator.of(context).push(PageTransition(
+                          type: PageTransitionType.fade,
+                          child: BlocProvider.value(value: BlocProvider.of<AddressCubit>(context)
+                              ,child: MyAddressPage()))),
+                      title: UserRepo.getUser().defaultAddress.addressLine1);
+                },
+              )
             ],
           )),
     );

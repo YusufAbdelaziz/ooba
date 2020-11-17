@@ -51,36 +51,37 @@ class MainProductsAppBar extends StatelessWidget implements PreferredSizeWidget 
               ),
             ],
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 40),
-            child: TextField(
-              controller: searchController,
-              style: Theme.of(context)
-                  .textTheme
-                  .bodyText1
-                  .copyWith(color: Theme.of(context).primaryColor, fontSize: 16, height: 1.2),
-              decoration: InputDecoration(
-                contentPadding: EdgeInsets.only(top: 10),
-                enabledBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(color: Theme.of(context).primaryColor),
-                ),
-                prefixIconConstraints: BoxConstraints(minWidth: 10, minHeight: 0),
-                prefixIcon: Padding(
-                  padding: const EdgeInsetsDirectional.only(end: 8,top: 10),
-                  child: Image.asset(
-                    'assets/images/search_icon.png',
-                    width: 15,
-                    height: 15,
-                  ),
-                ),
-              ),
-            ),
-          ),
+          // Padding(
+          //   padding: const EdgeInsets.symmetric(horizontal: 40),
+          //   child: TextField(
+          //     controller: searchController,
+          //     style: Theme.of(context)
+          //         .textTheme
+          //         .bodyText1
+          //         .copyWith(color: Theme.of(context).primaryColor, fontSize: 16, height: 1.2),
+          //     decoration: InputDecoration(
+          //       contentPadding: EdgeInsets.only(top: 10),
+          //       enabledBorder: UnderlineInputBorder(
+          //         borderSide: BorderSide(color: Theme.of(context).primaryColor),
+          //       ),
+          //       prefixIconConstraints: BoxConstraints(minWidth: 10, minHeight: 0),
+          //       prefixIcon: Padding(
+          //         padding: const EdgeInsetsDirectional.only(end: 8,top: 10),
+          //         child: Image.asset(
+          //           'assets/images/search_icon.png',
+          //           width: 15,
+          //           height: 15,
+          //         ),
+          //       ),
+          //     ),
+          //   ),
+          // ),
         ],
       ),
     );
   }
 
+  /// Return it to 140 when search bar is needed.
   @override
-  Size get preferredSize => Size(double.infinity, 140);
+  Size get preferredSize => Size(double.infinity, 100);
 }

@@ -1,6 +1,8 @@
+import 'package:Ooba/blocs/address_cubit/address_cubit.dart';
 import 'package:Ooba/blocs/cart_bloc/cart_bloc.dart';
 import 'package:Ooba/blocs/checkout/checkout_cubit.dart';
 import 'package:Ooba/pages/address/my_address_page.dart';
+import 'package:Ooba/repos/user_repo/user_repo.dart';
 import 'package:Ooba/utilities/error_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -36,8 +38,8 @@ class OrderDetailsPage extends StatelessWidget {
                     if (state is CheckoutFail) {
                       errorSnackBar(state.text, context);
                     } else if (state is Checkout) {
-                      Navigator.of(context)
-                          .push(PageTransition(child: OrderPlacedPage(), type: PageTransitionType.fade));
+                      Navigator.of(context).push(
+                          PageTransition(child: OrderPlacedPage(), type: PageTransitionType.fade));
                     }
                   },
                   child: BlocBuilder<CartBloc, CartState>(builder: (context, state) {
@@ -49,7 +51,9 @@ class OrderDetailsPage extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              AppLocalizations.of(context).translate('OrderDetails.orderDetails').toUpperCase(),
+                              AppLocalizations.of(context)
+                                  .translate('OrderDetails.orderDetails')
+                                  .toUpperCase(),
                               style: Theme.of(context).textTheme.headline4,
                             ),
                             space(height: 10),
@@ -80,14 +84,18 @@ class OrderDetailsPage extends StatelessWidget {
                                                   style: Theme.of(context)
                                                       .textTheme
                                                       .bodyText2
-                                                      .copyWith(fontSize: 18, fontWeight: FontWeight.w300),
+                                                      .copyWith(
+                                                          fontSize: 18,
+                                                          fontWeight: FontWeight.w300),
                                                 ),
                                                 Text(
                                                   "  X" + state.items[i].quantity.toString(),
                                                   style: Theme.of(context)
                                                       .textTheme
                                                       .bodyText2
-                                                      .copyWith(fontSize: 18, fontWeight: FontWeight.w300),
+                                                      .copyWith(
+                                                          fontSize: 18,
+                                                          fontWeight: FontWeight.w300),
                                                 ),
                                               ],
                                             ),
@@ -108,16 +116,23 @@ class OrderDetailsPage extends StatelessWidget {
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      AppLocalizations.of(context).translate('OrderDetails.deliverTo').toUpperCase(),
+                                      AppLocalizations.of(context)
+                                          .translate('OrderDetails.deliverTo')
+                                          .toUpperCase(),
                                       style: Theme.of(context).textTheme.headline4,
                                     ),
                                     InkWell(
-                                      onTap: () => Navigator.of(context)
-                                          .push(PageTransition(type: PageTransitionType.fade, child: MyAddressPage())),
+                                      onTap: () => Navigator.of(context).push(PageTransition(
+                                          type: PageTransitionType.fade,
+                                          child: BlocProvider.value(
+                                              value: BlocProvider.of<AddressCubit>(context),
+                                              child: MyAddressPage()))),
                                       child: Padding(
-                                        padding: const EdgeInsetsDirectional.only(top: 8, bottom: 8, start: 8),
+                                        padding: const EdgeInsetsDirectional.only(
+                                            top: 8, bottom: 8, start: 8),
                                         child: Text(
-                                          AppLocalizations.of(context).translate('OrderDetails.change'),
+                                          AppLocalizations.of(context)
+                                              .translate('OrderDetails.change'),
                                           style: Theme.of(context)
                                               .textTheme
                                               .headline2
@@ -128,10 +143,18 @@ class OrderDetailsPage extends StatelessWidget {
                                   ],
                                 ),
                                 space(height: 10),
-                                Text(
-                                  'Kings Street 20, Southfield, Michingan (MI), 48075',
-                                  maxLines: 3,
-                                  style: Theme.of(context).textTheme.headline5.copyWith(color: Colors.black),
+                                BlocBuilder<AddressCubit, AddressState>(
+                                  builder: (context, state) {
+                                    final defaultAddress = UserRepo.getUser().defaultAddress;
+                                    return Text(
+                                      '${defaultAddress.country},  ${defaultAddress.city}, ${defaultAddress.addressLine1}',
+                                      maxLines: 3,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .headline5
+                                          .copyWith(color: Colors.black),
+                                    );
+                                  }
                                 ),
                                 space(height: 20),
                                 Divider(
@@ -146,7 +169,9 @@ class OrderDetailsPage extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  AppLocalizations.of(context).translate('OrderDetails.shippingMethod').toUpperCase(),
+                                  AppLocalizations.of(context)
+                                      .translate('OrderDetails.shippingMethod')
+                                      .toUpperCase(),
                                   style: Theme.of(context).textTheme.headline4,
                                 ),
                                 space(height: 10),
@@ -189,7 +214,9 @@ class OrderDetailsPage extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  AppLocalizations.of(context).translate('OrderDetails.subtotal').toUpperCase(),
+                                  AppLocalizations.of(context)
+                                      .translate('OrderDetails.subtotal')
+                                      .toUpperCase(),
                                   style: Theme.of(context).textTheme.headline5,
                                 ),
                                 Text('\$768.00', style: Theme.of(context).textTheme.headline2)
@@ -199,7 +226,9 @@ class OrderDetailsPage extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  AppLocalizations.of(context).translate('OrderDetails.shipping').toUpperCase(),
+                                  AppLocalizations.of(context)
+                                      .translate('OrderDetails.shipping')
+                                      .toUpperCase(),
                                   style: Theme.of(context).textTheme.headline5,
                                 ),
                                 Text('\$4.00', style: Theme.of(context).textTheme.headline2)
@@ -226,7 +255,8 @@ class OrderDetailsPage extends StatelessWidget {
                             space(height: 30),
                             Padding(
                               padding: const EdgeInsets.symmetric(horizontal: 50),
-                              child: BlocBuilder<CheckoutCubit, CheckoutState>(builder: (context, state) {
+                              child: BlocBuilder<CheckoutCubit, CheckoutState>(
+                                  builder: (context, state) {
                                 if (state is LoadingCheckout)
                                   return Container(
                                     margin: EdgeInsets.only(bottom: 10),
@@ -246,11 +276,13 @@ class OrderDetailsPage extends StatelessWidget {
                                 return CustomButton(
                                   onTap: () {
                                     // TODO: change 1 with address id
-                                    BlocProvider.of<CheckoutCubit>(context).checkout(1);
+                                    BlocProvider.of<CheckoutCubit>(context)
+                                        .checkout(UserRepo.getUser().defaultAddress.id);
                                   },
                                   color: Theme.of(context).primaryColor,
                                   content: Text(
-                                    AppLocalizations.of(context).translate('OrderDetails.placeTheOrder'),
+                                    AppLocalizations.of(context)
+                                        .translate('OrderDetails.placeTheOrder'),
                                     style: Theme.of(context).textTheme.button,
                                   ),
                                 );

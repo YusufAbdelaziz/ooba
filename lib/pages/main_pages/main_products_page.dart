@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:page_transition/page_transition.dart';
 
+import '../../blocs/address_cubit/address_cubit.dart';
+import '../../repos/user_repo/user_repo.dart';
 import '../../widgets/common/products_grid.dart';
 import '../../widgets/main_product_pages/custom_drawer.dart';
 import '../../widgets/main_product_pages/main_products_app_bar.dart';
@@ -13,6 +16,7 @@ class MainProductsPage extends StatefulWidget {
 
 class _MainProductsPageState extends State<MainProductsPage> {
   TextEditingController _searchController;
+  final _user = UserRepo.getUser();
   @override
   void initState() {
     super.initState();
@@ -27,21 +31,26 @@ class _MainProductsPageState extends State<MainProductsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Builder(
-      builder: (context) => Scaffold(
-        drawer: CustomDrawer(),
-        appBar: MainProductsAppBar(
-          searchController: _searchController,
-          cartAction: () => Navigator.of(context)
-              .push(PageTransition(type: PageTransitionType.fade, child: OrderDetailsPage())),
-        ),
-        backgroundColor: Colors.black,
-        body: ClipRRect(
-          borderRadius:
-              BorderRadius.only(topRight: Radius.circular(15), topLeft: Radius.circular(15)),
-          child: Container(
-            color: Theme.of(context).backgroundColor,
-            child: ProductsGrid(),
+    return BlocProvider<AddressCubit>(
+      create: (_) => AddressCubit()..fetchAddresses(token: _user.token),
+      child: Builder(
+        builder: (context) => Scaffold(
+          drawer: CustomDrawer(),
+          appBar: MainProductsAppBar(
+            searchController: _searchController,
+            cartAction: () => Navigator.of(context).push(PageTransition(
+                type: PageTransitionType.fade,
+                child: BlocProvider.value(
+                    value: BlocProvider.of<AddressCubit>(context), child: OrderDetailsPage()))),
+          ),
+          backgroundColor: Colors.black,
+          body: ClipRRect(
+            borderRadius:
+                BorderRadius.only(topRight: Radius.circular(15), topLeft: Radius.circular(15)),
+            child: Container(
+              color: Theme.of(context).backgroundColor,
+              child: ProductsGrid(),
+            ),
           ),
         ),
       ),

@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:Ooba/models/address.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -14,6 +15,7 @@ class UserRepo {
       print('data fetched from shared preference');
       final userJson = json.decode(sharedPreference.getString('userData')) as Map<String, dynamic>;
       _user.fromJson(json: userJson);
+      print('user after fetching from shared --> $_user');
     }
     return _user;
   }
@@ -33,6 +35,15 @@ class UserRepo {
     sharedPreference.setString('userData', json.encode(userData));
     _user.fromJson(json: userData);
     print('user after store --> $_user');
+  }
+
+  static Future<void> setDefaultAddress({@required Address defaultAddress}) async {
+    final sharedPreference = await SharedPreferences.getInstance();
+    if (sharedPreference.containsKey('userData')) {
+      _user.updateAddress(defaultAddress);
+      sharedPreference.setString('userData', json.encode(_user.toJson()));
+      print('Default address is ${_user.defaultAddress}');
+    }
   }
 
   static Future<void> deleteData() async {

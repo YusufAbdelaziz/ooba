@@ -120,7 +120,7 @@
     "country": "Country",
     "city": "City",
     "zipCode": "Zip Code",
-    "setDefault": "Set Default Address",
+    "setDefault": "Set Default",
     "save": "Save",
     "header": "Fill in the form below so we can know exactly where to ship your order.",
     "addNewAddress" : "Add new address"
