@@ -4,7 +4,7 @@ import 'package:Ooba/models/address.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../models/user.dart';
+import '../models/user.dart';
 
 class UserRepo {
   static User _user = User();

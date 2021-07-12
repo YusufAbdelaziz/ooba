@@ -1,10 +1,10 @@
-import 'package:Ooba/repos/user_repo/user_repo.dart';
+import 'package:Ooba/repos/user_repo.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
 import '../../models/address.dart';
-import '../../repos/address_repo/address_repo.dart';
+import '../../repos/address_repo.dart';
 
 part 'address_state.dart';
 

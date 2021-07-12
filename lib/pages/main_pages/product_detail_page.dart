@@ -22,7 +22,7 @@ import '../../blocs/main_pages_bloc/favorite_switcher_cubit/favorite_switcher_cu
 import '../../blocs/cart_bloc/cart_bloc.dart';
 import '../../blocs/counter_bloc/counter_bloc.dart';
 import '../../models/product.dart';
-import '../../repos/user_repo/user_repo.dart';
+import '../../repos/user_repo.dart';
 import '../../utilities/error_bar.dart';
 
 class ProductDetailPage extends StatelessWidget {
@@ -86,7 +86,7 @@ class ProductDetailPage extends StatelessWidget {
                           child: Container(
                             padding: const EdgeInsets.only(bottom: 30.0, right: 15),
                             child: AutoSizeText(
-                              product.name ?? '',
+                              product.title ?? '',
                               minFontSize: 16,
                               style: Theme.of(context).textTheme.headline1.copyWith(
                                     fontWeight: FontWeight.w500,
@@ -102,7 +102,7 @@ class ProductDetailPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       AutoSizeText(
-                        product.price + ' KD ',
+                        '\$${product.price}',
                         style: Theme.of(context)
                             .textTheme
                             .headline1
@@ -216,7 +216,7 @@ class ProductDetailPage extends StatelessWidget {
                 errorSnackBar(state.text, context);
               } else if (state is ProductAddedToCart) {
                 Navigator.of(context).pop();
-                Scaffold.of(context).showSnackBar(
+                ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     content: Text("This product added successfully"),
                     backgroundColor: Colors.lightGreen,

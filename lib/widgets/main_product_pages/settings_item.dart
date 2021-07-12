@@ -36,7 +36,7 @@ class SettingsItem extends StatelessWidget {
           ],
         ),
         space(height: 10),
-        Text(title,
+        Text(title ?? '',
             style: Theme.of(context).textTheme.headline2.copyWith(fontWeight: FontWeight.w400)),
         space(height: 20),
         Divider(

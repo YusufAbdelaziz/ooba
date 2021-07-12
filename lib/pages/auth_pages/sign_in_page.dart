@@ -1,26 +1,24 @@
-import 'package:Ooba/utilities/custom_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:page_transition/page_transition.dart';
 
-import '../../../blocs/global_blocs/auth/auth_cubit.dart';
-import '../../../blocs/global_blocs/email_username_validation/email_username_validation_bloc.dart';
-import '../../../blocs/global_blocs/language/language_bloc.dart';
-import '../../../blocs/global_blocs/main_cubit/main_cubit.dart';
-import '../../../blocs/global_blocs/password_validation/password_validation_bloc.dart';
-import '../../../blocs/global_blocs/password_visibility/password_visibility_cubit.dart';
-import '../../../blocs/global_blocs/state_handler_cubit/state_handler_cubit.dart';
-import '../../../common/translation_configuration/app_localizations.dart';
-import '../../../common/translation_configuration/shared_preferences_service.dart';
-import '../../../pages/auth_pages/forget_password/forget_password_page.dart';
-import '../../../pages/auth_pages/sign_up/sign_up_page.dart';
-import '../../../utilities/space.dart';
-import '../../../widgets/auth_pages/custom_auth_footer.dart';
-import '../../../widgets/auth_pages/custom_auth_header.dart';
-import '../../../widgets/common/custom_appbar.dart';
-import '../../../widgets/common/custom_button.dart';
-import '../../../widgets/common/custom_text_field.dart';
-import '../../../widgets/main_product_pages/custom_loading_indicator.dart';
+import '../../blocs/global_blocs/auth/auth_cubit.dart';
+import '../../blocs/global_blocs/email_username_validation/email_username_validation_bloc.dart';
+import '../../blocs/global_blocs/main_cubit/main_cubit.dart';
+import '../../blocs/global_blocs/password_validation/password_validation_bloc.dart';
+import '../../blocs/global_blocs/password_visibility/password_visibility_cubit.dart';
+import '../../blocs/global_blocs/state_handler_cubit/state_handler_cubit.dart';
+import '../../common/translation_configuration/app_localizations.dart';
+import '../../utilities/space.dart';
+import '../../widgets/auth_pages/custom_auth_footer.dart';
+import '../../widgets/auth_pages/custom_auth_header.dart';
+import '../../widgets/common/custom_appbar.dart';
+import '../../widgets/common/custom_button.dart';
+import '../../widgets/common/custom_text_field.dart';
+import '../../widgets/main_product_pages/custom_loading_indicator.dart';
+import '../../utilities/custom_snack_bar.dart';
+import 'forget_password_page.dart';
+import 'sign_up_page.dart';
 
 class SignInPage extends StatefulWidget {
   @override
@@ -140,7 +138,9 @@ class _SignInPageState extends State<SignInPage> {
                                             BlocProvider.of<PasswordVisibilityCubit>(context)
                                                 .switchPasswordVisibility(isVisible: !isVisible),
                                         child: Icon(
-                                            isVisible ? Icons.visibility : Icons.visibility_off)),
+                                          isVisible ? Icons.visibility : Icons.visibility_off,
+                                          color: Theme.of(context).primaryColor,
+                                        )),
                                   );
                                 });
                               },
@@ -231,7 +231,7 @@ class _SignInPageState extends State<SignInPage> {
                                                 password: _passwordController.text,
                                                 isRemembered: isRemember);
                                           } else {
-                                            Scaffold.of(context).showSnackBar(SnackBar(
+                                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                                               content: Text(AppLocalizations.of(context)
                                                   .translate('SignIn.enterValidEmailAndPass')),
                                               action: SnackBarAction(
@@ -245,18 +245,6 @@ class _SignInPageState extends State<SignInPage> {
                                       );
                                     },
                                   ),
-                                  // CustomButton(
-                                  //   color: Theme.of(context).buttonColor,
-                                  //   label: AppLocalizations.of(context)
-                                  //       .translate('SignIn.signInWithGoogle'),
-                                  //   logoAsset: 'assets/images/google.png',
-                                  // ),
-                                  // CustomButton(
-                                  //   color: Theme.of(context).buttonColor,
-                                  //   label: AppLocalizations.of(context)
-                                  //       .translate('SignIn.signInWithFacebook'),
-                                  //   logoAsset: 'assets/images/facebook.png',
-                                  // ),
                                   space(height: 10),
                                   CustomAuthFooter(
                                     onTap: () => Navigator.of(context).push(PageTransition(
@@ -272,18 +260,6 @@ class _SignInPageState extends State<SignInPage> {
                           ],
                         ),
                       ),
-                      FlatButton(
-                        child: Text('switch lang'),
-                        onPressed: () {
-                          if (AppLocalizations.of(context).locale.languageCode == 'en') {
-                            BlocProvider.of<LanguageBloc>(context)
-                                .add(LanguageSelected(languageCode: Language.AR));
-                          } else {
-                            BlocProvider.of<LanguageBloc>(context)
-                                .add(LanguageSelected(languageCode: Language.EN));
-                          }
-                        },
-                      )
                     ],
                   ),
                 )

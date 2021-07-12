@@ -1,14 +1,15 @@
-import 'package:Ooba/blocs/global_blocs/email_username_validation/email_username_validation_bloc.dart';
-import 'package:Ooba/common/translation_configuration/app_localizations.dart';
-import 'package:Ooba/pages/auth_pages/email_check/email_check_page.dart';
-import 'package:Ooba/utilities/space.dart';
-import 'package:Ooba/widgets/auth_pages/custom_auth_header.dart';
-import 'package:Ooba/widgets/common/custom_appbar.dart';
-import 'package:Ooba/widgets/common/custom_button.dart';
-import 'package:Ooba/widgets/common/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:page_transition/page_transition.dart';
+
+import '../../blocs/global_blocs/email_username_validation/email_username_validation_bloc.dart';
+import '../../common/translation_configuration/app_localizations.dart';
+import '../../pages/auth_pages/email_check_page.dart';
+import '../../utilities/space.dart';
+import '../../widgets/auth_pages/custom_auth_header.dart';
+import '../../widgets/common/custom_appbar.dart';
+import '../../widgets/common/custom_button.dart';
+import '../../widgets/common/custom_text_field.dart';
 
 class ForgetPasswordPage extends StatefulWidget {
   @override
@@ -78,8 +79,7 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
                           onTap: () => Navigator.of(context).push(PageTransition(
                               type: PageTransitionType.fade, child: EmailCheckPage())),
                           content: Text(
-                            AppLocalizations.of(context)
-                                .translate('ForgetPassword.resetPassword'),
+                            AppLocalizations.of(context).translate('ForgetPassword.resetPassword'),
                             style: Theme.of(context).textTheme.button,
                           ),
                           color: Theme.of(context).primaryColor,

@@ -3,7 +3,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
 import '../../../models/product.dart';
-import '../../../repos/products_repo/products_repo.dart';
+import '../../../repos/products_repo.dart';
 
 part 'favorite_switcher_state.dart';
 

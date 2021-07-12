@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
 
 import '../../../models/product.dart';
-import '../../../repos/products_repo/products_repo.dart';
+import '../../../repos/products_repo.dart';
 
 part 'products_event.dart';
 part 'products_state.dart';

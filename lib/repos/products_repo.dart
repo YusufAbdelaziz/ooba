@@ -3,11 +3,11 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-import '../../models/product.dart';
-import '../../repos/user_repo/user_repo.dart';
+import '../models/product.dart';
+import 'user_repo.dart';
 
 class ProductsRepo {
-  static const _url = 'https://itsooba.com/wp-admin/admin-ajax.php';
+  static const _url = '';
 
   static Future<List<Product>> fetchProducts(
       {int limit = 20, @required int page, String slug}) async {
@@ -20,10 +20,10 @@ class ProductsRepo {
     if (slug != null) {
       body['category_slug'] = slug;
     }
-    final response = await http.post(_url, body: body);
+    final response = await http.get(Uri.parse('https://fakestoreapi.com/products'));
 
     final products = List<Product>.from(
-        json.decode(response.body)['products'].map((product) => Product.fromJson(product)));
+        json.decode(response.body).map((product) => Product.fromJson(product)));
     return products;
   }
 
@@ -34,10 +34,10 @@ class ProductsRepo {
       'product_id': productId.toString()
     };
 
-    final response = await http.post(_url, body: body);
-    final responseBody = json.decode(response.body);
-    if (responseBody['status'] != 'success') {
-      throw responseBody['message'];
-    }
+    // final response = await http.post(_url, body: body);
+    // final responseBody = json.decode(response.body);
+    // if (responseBody['status'] != 'success') {
+    //   throw responseBody['message'];
+    // }
   }
 }

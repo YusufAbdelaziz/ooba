@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
-import '../../../repos/user_repo/user_repo.dart';
+import '../../../repos/user_repo.dart';
 
 part 'main_state.dart';
 

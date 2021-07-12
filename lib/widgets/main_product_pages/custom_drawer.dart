@@ -2,7 +2,7 @@ import 'package:Ooba/blocs/address_cubit/address_cubit.dart';
 import 'package:Ooba/blocs/global_blocs/auth/auth_cubit.dart';
 import 'package:Ooba/blocs/global_blocs/main_cubit/main_cubit.dart';
 import 'package:Ooba/pages/main_pages/settings_page.dart';
-import 'package:Ooba/repos/user_repo/user_repo.dart';
+import 'package:Ooba/repos/user_repo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:page_transition/page_transition.dart';
@@ -64,7 +64,7 @@ class CustomDrawer extends StatelessWidget {
                 _user.name,
                 style: Theme.of(context).textTheme.headline3.copyWith(fontSize: 20),
               ),
-              Text(_user.email,
+              Text(_user.email ?? '',
                   style: Theme.of(context)
                       .textTheme
                       .headline5
@@ -85,14 +85,16 @@ class CustomDrawer extends StatelessWidget {
                         padding: EdgeInsets.symmetric(horizontal: 15),
                         itemCount: state.categories.length + 1,
                         itemBuilder: (context, i) => i == state.categories.length
-                            ? DrawerItem(
-                                name: AppLocalizations.of(context).translate('Drawer.settings'),
-                                onTap: () => Navigator.of(context).push(PageTransition(
-                                    type: PageTransitionType.fade,
-                                    child: BlocProvider.value(
-                                        value: BlocProvider.of<AddressCubit>(context),
-                                        child: SettingsPage()))),
-                              )
+                            ? Container(margin: EdgeInsets.only(top: 20),
+                              child: DrawerItem(
+                                  name: AppLocalizations.of(context).translate('Drawer.settings'),
+                                  onTap: () => Navigator.of(context).push(PageTransition(
+                                      type: PageTransitionType.fade,
+                                      child: BlocProvider.value(
+                                          value: BlocProvider.of<AddressCubit>(context),
+                                          child: SettingsPage()))),
+                                ),
+                            )
                             : DrawerItem(
                                 name: state.categories[i].name,
                                 onTap: () => Navigator.of(context).push(PageTransition(

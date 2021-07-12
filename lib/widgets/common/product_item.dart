@@ -35,7 +35,7 @@ class ProductItem extends StatelessWidget {
             children: [
               Stack(
                 children: [
-                  Container(
+                  Container(width: 200,height: 200,
                       padding: EdgeInsets.all(5),
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(5),
@@ -55,7 +55,6 @@ class ProductItem extends StatelessWidget {
                       child: BlocConsumer<FavoriteSwitcherCubit, FavoriteSwitcherState>(
                           listener: (context, state) {
                         if (state is FavoriteSwitchFail) {
-
                           CustomSnackBar.showSnackBar(
                               context: context,
                               textMsg:
@@ -88,16 +87,16 @@ class ProductItem extends StatelessWidget {
                       children: [
                         Expanded(
                             child: Text(
-                          product.name,
+                          product.title,
                           overflow: TextOverflow.ellipsis,
                         )),
-                        Text(product.price + " KD"),
+                        Text("\$${product.price}"),
                       ],
                     ),
                     Container(
                       alignment: AlignmentDirectional.centerStart,
                       child: Text(
-                        'By Wahab',
+                        'Unknown',
                       ),
                     ),
                   ],

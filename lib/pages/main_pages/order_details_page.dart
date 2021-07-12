@@ -2,7 +2,7 @@ import 'package:Ooba/blocs/address_cubit/address_cubit.dart';
 import 'package:Ooba/blocs/cart_bloc/cart_bloc.dart';
 import 'package:Ooba/blocs/checkout/checkout_cubit.dart';
 import 'package:Ooba/pages/address/my_address_page.dart';
-import 'package:Ooba/repos/user_repo/user_repo.dart';
+import 'package:Ooba/repos/user_repo.dart';
 import 'package:Ooba/utilities/error_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -73,14 +73,17 @@ class OrderDetailsPage extends StatelessWidget {
                                         Column(
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
-                                            Text(state.items[i].product.name),
+                                            Container(width : 250,
+                                                child: Text(
+                                              state.items[i].product.title,
+                                              overflow: TextOverflow.ellipsis,
+                                            )),
                                             space(height: 10),
                                             Row(
                                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                               children: [
                                                 Text(
-                                                  "${double.parse(state.items[i].product.price) * state.items[i].quantity.toDouble()}" +
-                                                      " KD ",
+                                                  "\$${state.items[i].product.price * state.items[i].quantity.toDouble()}",
                                                   style: Theme.of(context)
                                                       .textTheme
                                                       .bodyText2
@@ -143,19 +146,17 @@ class OrderDetailsPage extends StatelessWidget {
                                   ],
                                 ),
                                 space(height: 10),
-                                BlocBuilder<AddressCubit, AddressState>(
-                                  builder: (context, state) {
-                                    final defaultAddress = UserRepo.getUser().defaultAddress;
-                                    return Text(
-                                      '${defaultAddress.country},  ${defaultAddress.city}, ${defaultAddress.addressLine1}',
-                                      maxLines: 3,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .headline5
-                                          .copyWith(color: Colors.black),
-                                    );
-                                  }
-                                ),
+                                BlocBuilder<AddressCubit, AddressState>(builder: (context, state) {
+                                  final defaultAddress = UserRepo.getUser().defaultAddress;
+                                  return Text(
+                                    '${defaultAddress.country},  ${defaultAddress.city}, ${defaultAddress.addressLine1}',
+                                    maxLines: 3,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headline5
+                                        .copyWith(color: Colors.black),
+                                  );
+                                }),
                                 space(height: 20),
                                 Divider(
                                   thickness: 1,

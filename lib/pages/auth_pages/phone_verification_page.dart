@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
-import '../../../common/translation_configuration/app_localizations.dart';
-import '../../../utilities/space.dart';
-import '../../../utilities/timer/ticker.dart';
-import '../../../utilities/timer/timer_bloc.dart';
-import '../../../widgets/common/custom_appbar.dart';
-import '../../../widgets/common/custom_button.dart';
+import '../../common/translation_configuration/app_localizations.dart';
+import '../../utilities/space.dart';
+import '../../utilities/timer/ticker.dart';
+import '../../utilities/timer/timer_bloc.dart';
+import '../../widgets/common/custom_appbar.dart';
+import '../../widgets/common/custom_button.dart';
 
 class PhoneVerificationPage extends StatefulWidget {
   @override

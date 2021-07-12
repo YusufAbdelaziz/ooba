@@ -28,7 +28,7 @@ class User {
     this.email = userMap['user_email'];
     this.id = userMap['ID'];
     this.defaultAddress =
-        userMap['address'] != null ? Address.fromJson(userMap['address']) : Address();
+         Address.fromJson(userMap['address']);
     this.isRemembered = json['isRemembered'] ?? isRemembered;
     this.isAuthenticated = json['isAuthenticated'] ?? isAuthenticated;
   }

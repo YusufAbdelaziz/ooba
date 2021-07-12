@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:Ooba/models/cart_item.dart';
-import 'package:Ooba/repos/cart_repo/cart_repo.dart';
+import 'package:Ooba/repos/cart_repo.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';

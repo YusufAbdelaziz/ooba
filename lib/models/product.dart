@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
 class Product {
-  final String name;
+  final String title;
   final int id;
   final List<String> imagesUrl;
-  final String price;
+  final num price;
   final int stockQuantity;
   final String description;
   final String shortDescription;
   bool isFavorite;
   Product(
-      {@required this.name,
+      {@required this.title,
       this.isFavorite = false,
       @required this.id,
       @required this.imagesUrl,
@@ -22,7 +22,7 @@ class Product {
   Map<String, dynamic> toJson() {
     final map = {};
     map['id'] = this.id;
-    map['name'] = this.name;
+    map['title'] = this.title;
     map['imageUrl'] = this.imagesUrl;
     map['stock_quantity'] = this.stockQuantity;
     map['price'] = this.price;
@@ -35,17 +35,17 @@ class Product {
   static Product fromJson(Map<String, dynamic> json) {
     return Product(
         description: json['description'],
-        shortDescription: json['short_description'],
-        stockQuantity: json['stock_quantity'],
-        name: json['name'],
+        shortDescription: json['short_description'] ?? json['description'],
+        stockQuantity: json['stock_quantity'] ?? 0,
+        title: json['title'],
         id: json['id'],
-        isFavorite: json['is_favourite'],
-        imagesUrl: List<String>.from(json['gallery_images'].map((image) => image['path'])),
+        isFavorite: json['is_favourite'] ?? false,
+        imagesUrl: List.generate(5, (index) => json['image']),
         price: json['price']);
   }
 
   @override
   String toString() {
-    return '{Name : ${this.name} , ID : ${this.id}, Price : ${this.price}}';
+    return '{Name : ${this.title} , ID : ${this.id}, Price : ${this.price}}';
   }
 }

@@ -2,7 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
-import '../../../repos/auth_repo/auth_repo.dart';
+import '../../../repos/auth_repo.dart';
 
 part 'auth_state.dart';
 

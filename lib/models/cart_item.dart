@@ -18,6 +18,6 @@ class CartItem {
 
   @override
   String toString() {
-    return '{Name : ${this.product.name} , ID : ${this.product.id}, Price : ${this.price}}';
+    return '{Name : ${this.product.title} , ID : ${this.product.id}, Price : ${this.price}}';
   }
 }

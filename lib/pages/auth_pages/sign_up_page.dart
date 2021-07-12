@@ -1,22 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../widgets/common/custom_button.dart';
-import '../../../blocs/global_blocs/auth/auth_cubit.dart';
-import '../../../blocs/global_blocs/email_username_validation/email_username_validation_bloc.dart';
-import '../../../blocs/global_blocs/language/language_bloc.dart';
-import '../../../blocs/global_blocs/main_cubit/main_cubit.dart';
-import '../../../blocs/global_blocs/password_validation/password_validation_bloc.dart';
-import '../../../blocs/global_blocs/password_visibility/password_visibility_cubit.dart';
-import '../../../common/translation_configuration/app_localizations.dart';
-import '../../../common/translation_configuration/shared_preferences_service.dart';
-import '../../../utilities/space.dart';
-import '../../../widgets/auth_pages/custom_auth_footer.dart';
-import '../../../widgets/auth_pages/custom_auth_header.dart';
-import '../../../widgets/common/custom_appbar.dart';
-import '../../../widgets/common/custom_text_field.dart';
-import '../../../utilities/custom_snack_bar.dart';
-import '../../../widgets/main_product_pages/custom_loading_indicator.dart';
+import '../../widgets/common/custom_button.dart';
+import '../../blocs/global_blocs/auth/auth_cubit.dart';
+import '../../blocs/global_blocs/email_username_validation/email_username_validation_bloc.dart';
+import '../../blocs/global_blocs/main_cubit/main_cubit.dart';
+import '../../blocs/global_blocs/password_validation/password_validation_bloc.dart';
+import '../../blocs/global_blocs/password_visibility/password_visibility_cubit.dart';
+import '../../common/translation_configuration/app_localizations.dart';
+import '../../utilities/space.dart';
+import '../../widgets/auth_pages/custom_auth_footer.dart';
+import '../../widgets/auth_pages/custom_auth_header.dart';
+import '../../widgets/common/custom_appbar.dart';
+import '../../widgets/common/custom_text_field.dart';
+import '../../utilities/custom_snack_bar.dart';
+import '../../widgets/main_product_pages/custom_loading_indicator.dart';
 
 class SignUpPage extends StatefulWidget {
   @override
@@ -191,9 +189,12 @@ class _SignUpPageState extends State<SignUpPage> {
                                                 BlocProvider.of<PasswordVisibilityCubit>(context)
                                                     .switchPasswordVisibility(
                                                         isVisible: !isPassVisible),
-                                            child: Icon(isPassVisible
-                                                ? Icons.visibility
-                                                : Icons.visibility_off)),
+                                            child: Icon(
+                                              isPassVisible
+                                                  ? Icons.visibility
+                                                  : Icons.visibility_off,
+                                              color: Theme.of(context).primaryColor,
+                                            )),
                                       ),
                                       space(height: 10),
                                       CustomTextField(
@@ -212,16 +213,19 @@ class _SignUpPageState extends State<SignUpPage> {
                                                     confirmPassword:
                                                         _confirmPasswordController.text)),
                                         suffixIcon: InkWell(
-                                            hoverColor: Colors.transparent,
-                                            splashColor: Colors.transparent,
-                                            highlightColor: Colors.transparent,
-                                            onTap: () =>
-                                                BlocProvider.of<PasswordVisibilityCubit>(context)
-                                                    .switchConfirmPasswordVisibility(
-                                                        isVisible: !isConfirmPassVisible),
-                                            child: Icon(isConfirmPassVisible
-                                                ? Icons.visibility
-                                                : Icons.visibility_off)),
+                                          hoverColor: Colors.transparent,
+                                          splashColor: Colors.transparent,
+                                          highlightColor: Colors.transparent,
+                                          onTap: () =>
+                                              BlocProvider.of<PasswordVisibilityCubit>(context)
+                                                  .switchConfirmPasswordVisibility(
+                                                      isVisible: !isConfirmPassVisible),
+                                          child: Icon(
+                                              isConfirmPassVisible
+                                                  ? Icons.visibility
+                                                  : Icons.visibility_off,
+                                              color: Theme.of(context).primaryColor),
+                                        ),
                                       ),
                                     ],
                                   );
@@ -309,18 +313,6 @@ class _SignUpPageState extends State<SignUpPage> {
                           ],
                         ),
                       ),
-                      FlatButton(
-                        child: Text('switch lang'),
-                        onPressed: () {
-                          if (AppLocalizations.of(context).locale.languageCode == 'en') {
-                            BlocProvider.of<LanguageBloc>(context)
-                                .add(LanguageSelected(languageCode: Language.AR));
-                          } else {
-                            BlocProvider.of<LanguageBloc>(context)
-                                .add(LanguageSelected(languageCode: Language.EN));
-                          }
-                        },
-                      )
                     ],
                   ),
                 )

@@ -10,11 +10,10 @@ class CustomButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
-      child: Container(
+      child: Container(decoration: BoxDecoration(color: color,borderRadius: BorderRadius.circular(30)) ,
         padding: logoAsset != null ? EdgeInsetsDirectional.only(start: 15) : EdgeInsets.zero,
         margin: EdgeInsets.only(bottom: 10),
         height: 44,
-        color: color,
         child: Row(
           children: [
             if (logoAsset != null)

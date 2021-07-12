@@ -34,6 +34,7 @@ class CustomTextField extends StatelessWidget {
       controller: controller,
       focusNode: focusNode,
       onSubmitted: onSubmitted,
+      cursorColor: Theme.of(context).primaryColor,
       keyboardType: inputType,
       onChanged: onChanged,
       enabled: isEnabled,
@@ -41,6 +42,10 @@ class CustomTextField extends StatelessWidget {
       style: Theme.of(context).textTheme.headline3.copyWith(fontSize: 16),
       decoration: InputDecoration(
         errorText: errorText,
+        focusedBorder: UnderlineInputBorder(
+            borderSide: BorderSide(
+          color: Theme.of(context).primaryColor,
+        )),
         suffixIcon: suffixIcon,
         labelText: labelText,
         labelStyle: Theme.of(context).textTheme.headline3,

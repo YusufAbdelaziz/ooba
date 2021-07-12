@@ -9,12 +9,15 @@ class CustomAuthFooter extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
-      child: RichText(
-        text: TextSpan(children: [
-          TextSpan(text: normalText, style: Theme.of(context).textTheme.headline5),
-          TextSpan(text: ' '),
-          TextSpan(text: boldText, style: Theme.of(context).textTheme.headline2)
-        ]),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: RichText(
+          text: TextSpan(children: [
+            TextSpan(text: normalText, style: Theme.of(context).textTheme.headline5),
+            TextSpan(text: ' '),
+            TextSpan(text: boldText, style: Theme.of(context).textTheme.headline2)
+          ]),
+        ),
       ),
     );
   }

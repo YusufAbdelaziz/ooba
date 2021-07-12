@@ -10,9 +10,9 @@ import 'blocs/main_pages_bloc/products_bloc/products_bloc.dart';
 import 'common/bloc_observer.dart';
 import 'common/custom_theme_mode.dart';
 import 'common/translation_configuration/app_localizations.dart';
-import 'pages/auth_pages/sign_in/sign_in_page.dart';
+import 'pages/auth_pages/sign_in_page.dart';
 import 'pages/main_pages/main_products_page.dart';
-import 'repos/categories_repo/categories_repo.dart';
+import 'repos/categories_repo.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

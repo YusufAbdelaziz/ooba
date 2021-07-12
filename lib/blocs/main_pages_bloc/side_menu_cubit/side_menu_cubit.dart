@@ -3,7 +3,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
 import '../../../models/category.dart';
-import '../../../repos/categories_repo/categories_repo.dart';
+import '../../../repos/categories_repo.dart';
 
 part 'side_menu_state.dart';
 

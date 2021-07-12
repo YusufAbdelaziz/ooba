@@ -1,10 +1,10 @@
-import 'package:Ooba/common/translation_configuration/app_localizations.dart';
-import 'package:Ooba/utilities/space.dart';
-import 'package:Ooba/widgets/auth_pages/custom_auth_header.dart';
-import 'package:Ooba/widgets/common/custom_appbar.dart';
-import 'package:Ooba/widgets/common/custom_button.dart';
 import 'package:flutter/material.dart';
 
+import '../../common/translation_configuration/app_localizations.dart';
+import '../../utilities/space.dart';
+import '../../widgets/auth_pages/custom_auth_header.dart';
+import '../../widgets/common/custom_appbar.dart';
+import '../../widgets/common/custom_button.dart';
 
 class EmailCheckPage extends StatelessWidget {
   @override
