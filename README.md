@@ -24,9 +24,16 @@ These are the basic features in the app :
 
 ## Samples
 
-| 1                  | 2                  | 3                  | 4                  | 5                  | 6                  |
-|--------------------|-----               |-----               |-----               |-----               |-----               |
-| ![First sample][1] |![Second sample][2] |![Third sample][3]  |![Fourth sample][4] |![Fifth sample][5]  |![Sixth sample][6]  |
+| 1                  | 2                  | 3                  |
+|--------------------|-----               |-----               |
+| ![First sample][1] |![Second sample][2] |![Third sample][3]  |
+
+| 4                  | 5                  | 6                  |
+|-----               |-----               |-----               |
+|![Fourth sample][4] |![Fifth sample][5]  |![Sixth sample][6]  |
+
+
+
 
 
 [1]: https://media.giphy.com/media/7R5wOdTucpWAAwID2p/giphy.gif
